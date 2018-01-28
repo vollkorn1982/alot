@@ -19,9 +19,11 @@ from .attachment import Attachment
 from .utils import encode_header
 from .. import __version__
 from .. import helper
+from ..helper import call_cmd
+from ..helper import split_commandstring
 from .. import crypto
 from ..settings.const import settings
-from ..errors import GPGProblem, GPGCode
+from ..errors import GPGProblem, GPGCode, ConversionError
 
 charset.add_charset('utf-8', charset.QP, charset.QP, 'utf-8')
 
@@ -174,16 +176,36 @@ class Envelope(object):
         # convert the text to its canonical format (as per RFC 2015).
         canonical_format = self.body.encode('utf-8')
         textpart = MIMEText(canonical_format, 'plain', 'utf-8')
+        inner_msg = textpart
 
-        # wrap it in a multipart container if necessary
-        if self.attachments:
-            inner_msg = MIMEMultipart()
+        # add a html alternative if txt2html converter is defined
+        txt2html_cmd = settings.get('txt2html_converter')
+        if txt2html_cmd:
+            logging.debug("converting message to html using %s" % txt2html_cmd)
+            cmdlist = split_commandstring(txt2html_cmd)
+            resultstring, errmsg, retval = call_cmd(cmdlist,
+                                                    stdin=canonical_format)
+            if retval != 0:
+                msg = 'txt2html converter "%s" returned with ' % txt2html_cmd
+                msg += 'return code %d' % retval
+                if errmsg:
+                    msg += ':\n%s' % errmsg
+                raise ConversionError(msg)
+            logging.debug("HTML version is \n" + resultstring)
+            htmlpart = MIMEText(resultstring, 'html', 'utf-8')
+            inner_msg = MIMEMultipart('alternative')
             inner_msg.attach(textpart)
+            inner_msg.attach(htmlpart)
+
+
+        # wrap everything in a multipart container if there are attachments
+        if self.attachments:
+            msg = MIMEMultipart('mixed')
+            msg.attach(bodypart)
             # add attachments
             for a in self.attachments:
-                inner_msg.attach(a.get_mime_representation())
-        else:
-            inner_msg = textpart
+                msg.attach(a.get_mime_representation())
+            inner_msg = msg
 
         if self.sign:
             plaintext = helper.email_as_string(inner_msg)
