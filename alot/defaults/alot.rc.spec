@@ -244,6 +244,11 @@ auto_replyto_mailinglist = boolean(default=False)
 # prefer plaintext alternatives over html content in multipart/alternative
 prefer_plaintext = boolean(default=False)
 
+# Use this command to construct a html alternative from the messages body before sendout.
+# The command will receive the plaintex on stdin and should produce html as stdout
+# (as `pandoc -t html` for example). If unset, we send only the plaintext part.
+txt2html_converter = string(default=None)
+
 # In a thread buffer, hide from messages summaries tags that are commom to all
 # messages in that thread.
 msg_summary_hides_threadwide_tags = boolean(default=True)
