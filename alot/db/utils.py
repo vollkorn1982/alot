@@ -8,6 +8,7 @@ import email
 import email.charset as charset
 from email.header import Header
 from email.iterators import typed_subpart_iterator
+from email.message import EmailMessage
 import email.utils
 import tempfile
 import re
@@ -209,7 +210,7 @@ def _handle_encrypted(original, message):
 
     if malformed:
         msg = u'Malformed OpenPGP message: {0}'.format(malformed)
-        content = email.message_from_string(msg)
+        content = message_from_string(msg)
         content.set_charset('utf-8')
         original.attach(content)
 
@@ -225,7 +226,7 @@ def message_from_file(handle):
     :returns: :class:`email.message.Message` possibly augmented with
               decrypted data
     '''
-    m = email.message_from_file(handle)
+    m = email.message_from_file(handle, _class=EmailMessage)
 
     # make sure no one smuggles a token in (data from m is untrusted)
     del m[X_SIGNATURE_VALID_HEADER]
@@ -273,7 +274,7 @@ def message_from_string(s):
     details.
 
     '''
-    return message_from_file(io.StringIO(s))
+    return message_from_file(io.StringIO(s), _class=EmailMessage)
 
 
 def message_from_bytes(bytestring):
@@ -431,39 +432,11 @@ def extract_body(mail, types=None, field_key='copiousoutput'):
         'prefer_plaintext') else 'text/html'
     has_preferred = False
 
-    # see if the mail has our preferred type
-    if types is None:
-        has_preferred = list(typed_subpart_iterator(
-            mail, *preferred.split('/')))
+    #%# see if the mail has our preferred type
+    # can be done using preference parm to get_body
 
-    body_parts = []
-    for part in mail.walk():
-        # skip non-leaf nodes in the mail tree
-        if part.is_multipart():
-            continue
-
-        ctype = part.get_content_type()
-
-        if types is not None:
-            if ctype not in types:
-                continue
-        cd = part.get('Content-Disposition', '')
-        if cd.startswith('attachment'):
-            continue
-        # if the mail has our preferred type, we only keep this type
-        # note that if types != None, has_preferred always stays False
-        if has_preferred and ctype != preferred:
-            continue
-
-        if ctype == 'text/plain':
-            body_parts.append(string_sanitize(remove_cte(part, as_string=True)))
-        else:
-            rendered_payload = render_part(part)
-            if rendered_payload:  # handler had output
-                body_parts.append(string_sanitize(rendered_payload))
-            else:  # mark as attachment
-                part.add_header('Content-Disposition', 'attachment; ' + cd)
-    return u'\n\n'.join(body_parts)
+    m = mail.get_body()
+    return m.get_payload()
 
 
 def decode_header(header, normalize=False):

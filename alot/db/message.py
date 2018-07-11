@@ -3,6 +3,7 @@
 # For further details see the COPYING file
 import email
 import email.charset as charset
+from email.message import EmailMessage
 import functools
 from datetime import datetime
 
@@ -94,7 +95,7 @@ class Message(object):
         return NotImplemented
 
     def get_email(self):
-        """returns :class:`email.Message` for this message"""
+        """returns :class:`email.message.EmailMessage` for this message"""
         path = self.get_filename()
         warning = "Subject: Caution!\n"\
                   "Message file is no longer accessible:\n%s" % path
@@ -103,7 +104,8 @@ class Message(object):
                 with open(path, 'rb') as f:
                     self._email = utils.message_from_bytes(f.read())
             except IOError:
-                self._email = email.message_from_string(warning)
+                self._email = email.message_from_string(warning,
+                                                        _class=EmailMessage)
         return self._email
 
     def get_date(self):
