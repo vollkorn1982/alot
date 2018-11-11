@@ -1,0 +1,481 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>4.5. Utils &#8212; Alot User Manual</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4.6. Commands" href="commands.html" />
+    <link rel="prev" title="4.4. User Settings" href="settings.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="commands.html" title="4.6. Commands"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="settings.html" title="4.4. User Settings"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Alot User Manual</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">4. API and Development</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-alot.helper">
+<span id="utils"></span><h1>4.5. Utils<a class="headerlink" href="#module-alot.helper" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="alot.helper.RFC3156_canonicalize">
+<code class="descclassname">alot.helper.</code><code class="descname">RFC3156_canonicalize</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.helper.RFC3156_canonicalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Canonicalizes plain text (MIME-encoded usually) according to RFC3156.</p>
+<p>This function works as follows (in that order):</p>
+<ol class="arabic simple">
+<li>Convert all line endings to \r\n (DOS line endings).</li>
+<li>Encode all occurrences of “From ” at the beginning of a line
+to “From=20” in order to prevent other mail programs to replace
+this with “&gt; From” (to avoid MBox conflicts) and thus invalidate
+the signature.</li>
+</ol>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> – text to canonicalize (already encoded as quoted-printable)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="alot.helper.call_cmd">
+<code class="descclassname">alot.helper.</code><code class="descname">call_cmd</code><span class="sig-paren">(</span><em>cmdlist</em>, <em>stdin=None</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.helper.call_cmd" title="Permalink to this definition">¶</a></dt>
+<dd><p>get a shell commands output, error message and return value and immediately
+return.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This returns with the first screen content for interactive commands.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cmdlist</strong> (<em>list of str</em>) – shellcommand to call, already splitted into a list accepted
+by <code class="xref py py-meth docutils literal notranslate"><span class="pre">subprocess.Popen()</span></code></li>
+<li><strong>stdin</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.7)"><em>bytes</em></a><em>, or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – string to pipe to the process</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">triple of stdout, stderr, return value of the shell command</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="alot.helper.call_cmd_async">
+<code class="descclassname">alot.helper.</code><code class="descname">call_cmd_async</code><span class="sig-paren">(</span><em>cmdlist</em>, <em>stdin=None</em>, <em>env=None</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.helper.call_cmd_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a command, call that command asynchronously and return the output.</p>
+<p>This function only handles <cite>OSError</cite> when creating the subprocess, any
+other exceptions raised either durring subprocess creation or while
+exchanging data with the subprocess are the caller’s responsibility to
+handle.</p>
+<p>If such an <cite>OSError</cite> is caught, then returncode will be set to 1, and the
+error value will be set to the str() method fo the exception.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>stdin</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – string to pipe to the process</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Tuple of stdout, stderr, returncode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a>]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="alot.helper.get_xdg_env">
+<code class="descclassname">alot.helper.</code><code class="descname">get_xdg_env</code><span class="sig-paren">(</span><em>env_name</em>, <em>fallback</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.helper.get_xdg_env" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used for XDG_* env variables to return fallback if unset <em>or</em> empty</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="alot.helper.guess_encoding">
+<code class="descclassname">alot.helper.</code><code class="descname">guess_encoding</code><span class="sig-paren">(</span><em>blob</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.helper.guess_encoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>uses file magic to determine the encoding of the given data blob.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>blob</strong> (<em>data</em>) – file content as read by file.read()</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">encoding</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="alot.helper.guess_mimetype">
+<code class="descclassname">alot.helper.</code><code class="descname">guess_mimetype</code><span class="sig-paren">(</span><em>blob</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.helper.guess_mimetype" title="Permalink to this definition">¶</a></dt>
+<dd><p>uses file magic to determine the mime-type of the given data blob.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>blob</strong> (<em>data</em>) – file content as read by file.read()</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">mime-type, falls back to ‘application/octet-stream’</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="alot.helper.humanize_size">
+<code class="descclassname">alot.helper.</code><code class="descname">humanize_size</code><span class="sig-paren">(</span><em>size</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.helper.humanize_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a nice human readable representation of the given number
+(understood as bytes) using the “KiB” and “MiB” suffixes to indicate
+kibibytes and mebibytes. A kibibyte is defined as 1024 bytes (as opposed to
+a kilobyte which is 1000 bytes) and a mibibyte is 1024**2 bytes (as opposed
+to a megabyte which is 1000**2 bytes).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the number to convert</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the human readable representation of size</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="alot.helper.libmagic_version_at_least">
+<code class="descclassname">alot.helper.</code><code class="descname">libmagic_version_at_least</code><span class="sig-paren">(</span><em>version</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.helper.libmagic_version_at_least" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if the libmagic library installed is more recent than a given
+version.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>version</strong> – minimum version expected in the form XYY (i.e. 5.14 -&gt; 514)
+with XYY &gt;= 513</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="alot.helper.mailto_to_envelope">
+<code class="descclassname">alot.helper.</code><code class="descname">mailto_to_envelope</code><span class="sig-paren">(</span><em>mailto_str</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.helper.mailto_to_envelope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interpret mailto-string into a <a class="reference internal" href="database.html#alot.db.envelope.Envelope" title="alot.db.envelope.Envelope"><code class="xref py py-class docutils literal notranslate"><span class="pre">alot.db.envelope.Envelope</span></code></a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="alot.helper.mimewrap">
+<code class="descclassname">alot.helper.</code><code class="descname">mimewrap</code><span class="sig-paren">(</span><em>path</em>, <em>filename=None</em>, <em>ctype=None</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.helper.mimewrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take the contents of the given path and wrap them into an email MIME
+part according to the content type.  The content type is auto detected from
+the actual file contents and the file name if it is not given.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – the path to the file contents</li>
+<li><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – the file name to use in the generated MIME part</li>
+<li><strong>ctype</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – the content type of the file contents in path</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the message MIME part storing the data from path</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">subclasses of email.mime.base.MIMEBase</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="alot.helper.parse_mailcap_nametemplate">
+<code class="descclassname">alot.helper.</code><code class="descname">parse_mailcap_nametemplate</code><span class="sig-paren">(</span><em>tmplate='%s'</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.helper.parse_mailcap_nametemplate" title="Permalink to this definition">¶</a></dt>
+<dd><p>this returns a prefix and suffix to be used
+in the tempfile module for a given mailcap nametemplate string</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="alot.helper.parse_mailto">
+<code class="descclassname">alot.helper.</code><code class="descname">parse_mailto</code><span class="sig-paren">(</span><em>mailto_str</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.helper.parse_mailto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interpret mailto-string</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mailto_str</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – the string to interpret. Must conform to :rfc:2368.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the header fields and the body found in the mailto link as a tuple
+of length two</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)">tuple</a>(<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a>(str-&gt;list(<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a>)), <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a>)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="alot.helper.pretty_datetime">
+<code class="descclassname">alot.helper.</code><code class="descname">pretty_datetime</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.helper.pretty_datetime" title="Permalink to this definition">¶</a></dt>
+<dd><p>translates <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code> <cite>d</cite> to a “sup-style” human readable string.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%c</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">&#39;Sat 31 Mar 2012 14:47:26 &#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pretty_datetime</span><span class="p">(</span><span class="n">now</span><span class="p">)</span>
+<span class="go">u&#39;just now&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pretty_datetime</span><span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="go">u&#39;1min ago&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pretty_datetime</span><span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+<span class="go">u&#39;5h ago&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pretty_datetime</span><span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">12</span><span class="p">))</span>
+<span class="go">u&#39;02:54am&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pretty_datetime</span><span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="go">u&#39;yest 02pm&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pretty_datetime</span><span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="go">u&#39;Thu 02pm&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pretty_datetime</span><span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">))</span>
+<span class="go">u&#39;Mar 24&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pretty_datetime</span><span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">356</span><span class="p">))</span>
+<span class="go">u&#39;Apr 2011&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="alot.helper.shell_quote">
+<code class="descclassname">alot.helper.</code><code class="descname">shell_quote</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.helper.shell_quote" title="Permalink to this definition">¶</a></dt>
+<dd><p>Escape the given text for passing it to the shell for interpretation.
+The resulting string will be parsed into one “word” (in the sense used in
+the shell documentation, see sh(1)) by the shell.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – the text to quote</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the quoted text</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="alot.helper.shorten">
+<code class="descclassname">alot.helper.</code><code class="descname">shorten</code><span class="sig-paren">(</span><em>string</em>, <em>maxlen</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.helper.shorten" title="Permalink to this definition">¶</a></dt>
+<dd><p>shortens string if longer than maxlen, appending ellipsis</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="alot.helper.shorten_author_string">
+<code class="descclassname">alot.helper.</code><code class="descname">shorten_author_string</code><span class="sig-paren">(</span><em>authors_string</em>, <em>maxlength</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.helper.shorten_author_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a list of authors concatenated as a text string (comma
+separated) and smartly adjust them to maxlength.</p>
+<p>1) If the complete list of sender names does not fit in maxlength, it
+tries to shorten names by using only the first part of each.</p>
+<p>2) If the list is still too long, hide authors according to the
+following priority:</p>
+<blockquote>
+<div><ul class="simple">
+<li>First author is always shown (if too long is shorten with ellipsis)</li>
+<li>If possible, last author is also shown (if too long, uses ellipsis)</li>
+<li>If there are more than 2 authors in the thread, show the
+maximum of them. More recent senders have higher priority.</li>
+<li>If it is finally necessary to hide any author, an ellipsis
+between first and next authors is added.</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="alot.helper.split_commandline">
+<code class="descclassname">alot.helper.</code><code class="descname">split_commandline</code><span class="sig-paren">(</span><em>s</em>, <em>comments=False</em>, <em>posix=True</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.helper.split_commandline" title="Permalink to this definition">¶</a></dt>
+<dd><p>splits semi-colon separated commandlines</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="alot.helper.split_commandstring">
+<code class="descclassname">alot.helper.</code><code class="descname">split_commandstring</code><span class="sig-paren">(</span><em>cmdstring</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.helper.split_commandstring" title="Permalink to this definition">¶</a></dt>
+<dd><p>split command string into a list of strings to pass on to subprocess.Popen
+and the like. This simply calls shlex.split but works also with unicode
+bytestrings.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="alot.helper.string_decode">
+<code class="descclassname">alot.helper.</code><code class="descname">string_decode</code><span class="sig-paren">(</span><em>string</em>, <em>enc='ascii'</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.helper.string_decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>safely decodes string to unicode bytestring, respecting <cite>enc</cite> as a hint.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>string</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> or </em><em>unicode</em>) – the string to decode</li>
+<li><strong>enc</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – a hint what encoding is used in string (‘ascii’, ‘utf-8’, …)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the unicode decoded input string</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">unicode</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="alot.helper.string_sanitize">
+<code class="descclassname">alot.helper.</code><code class="descname">string_sanitize</code><span class="sig-paren">(</span><em>string</em>, <em>tab_width=8</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.helper.string_sanitize" title="Permalink to this definition">¶</a></dt>
+<dd><p>strips, and replaces non-printable characters</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tab_width</strong> (int or <cite>None</cite>) – number of spaces to replace tabs with. Read from
+<cite>globals.tabwidth</cite> setting if <cite>None</cite></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">string_sanitize</span><span class="p">(</span><span class="s1">&#39; foo</span><span class="se">\r</span><span class="s1">bar &#39;</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="go">&#39; foobar &#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">string_sanitize</span><span class="p">(</span><span class="s1">&#39;foo</span><span class="se">\t</span><span class="s1">bar&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="go">&#39;foo     bar&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">string_sanitize</span><span class="p">(</span><span class="s1">&#39;foo</span><span class="se">\t\t</span><span class="s1">bar&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="go">&#39;foo             bar&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="alot.helper.try_decode">
+<code class="descclassname">alot.helper.</code><code class="descname">try_decode</code><span class="sig-paren">(</span><em>blob</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.helper.try_decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Guess the encoding of blob and try to decode it into a str.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>blob</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.7)"><em>bytes</em></a>) – The bytes to decode</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the decoded blob</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="module-alot.utils"></span></div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="settings.html"
+                        title="previous chapter">4.4. User Settings</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="commands.html"
+                        title="next chapter">4.6. Commands</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/utils.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="commands.html" title="4.6. Commands"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="settings.html" title="4.4. User Settings"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Alot User Manual</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >4. API and Development</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2014, Patrick Totzke.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+    </div>
+  </body>
+</html>

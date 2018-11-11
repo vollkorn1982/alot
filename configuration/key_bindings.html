@@ -1,0 +1,292 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>3.4. Key Bindings &#8212; Alot User Manual</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3.5. Hooks" href="hooks.html" />
+    <link rel="prev" title="3.3. Contacts Completion" href="contacts_completion.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="hooks.html" title="3.5. Hooks"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="contacts_completion.html" title="3.3. Contacts Completion"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Alot User Manual</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">3. Configuration</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="key-bindings">
+<span id="config-key-bindings"></span><h1>3.4. Key Bindings<a class="headerlink" href="#key-bindings" title="Permalink to this headline">¶</a></h1>
+<p>If you want to bind a command to a key you can do so by adding the pair to the
+<cite>[bindings]</cite> section. This will introduce a <em>global</em> binding, that works in
+all modes. To make a binding specific to a mode you have to add the pair
+under the subsection named like the mode. For instance,
+if you want to bind <cite>T</cite> to open a new search for threads tagged with ‘todo’,
+and be able to toggle this tag in search mode, you’d add this to your config</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[bindings]</span>
+  <span class="na">T</span> <span class="o">=</span> <span class="s">search tag:todo</span>
+
+  <span class="k">[[search]]</span>
+  <span class="na">t</span> <span class="o">=</span> <span class="s">toggletags todo</span>
+</pre></div>
+</div>
+<p id="modes">Known modes are:</p>
+<ul class="simple">
+<li>bufferlist</li>
+<li>envelope</li>
+<li>namedqueries</li>
+<li>search</li>
+<li>taglist</li>
+<li>thread</li>
+</ul>
+<p>Have a look at <a class="reference external" href="http://excess.org/urwid/wiki/UserInput">the urwid User Input documentation</a> on how key strings are formatted.</p>
+<div class="section" id="default-bindings">
+<span id="config-key-bingings-defaults"></span><h2>3.4.1. Default bindings<a class="headerlink" href="#default-bindings" title="Permalink to this headline">¶</a></h2>
+<p>User-defined bindings are combined with the default bindings listed below.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">up</span> <span class="o">=</span> <span class="s">move up</span>
+<span class="na">down</span> <span class="o">=</span> <span class="s">move down</span>
+<span class="na">page up</span> <span class="o">=</span> <span class="s">move page up</span>
+<span class="na">page down</span> <span class="o">=</span> <span class="s">move page down</span>
+<span class="na">mouse press 4</span> <span class="o">=</span> <span class="s">move up</span>
+<span class="na">mouse press 5</span> <span class="o">=</span> <span class="s">move down</span>
+<span class="na">j</span> <span class="o">=</span> <span class="s">move down</span>
+<span class="na">k</span> <span class="o">=</span> <span class="s">move up</span>
+<span class="na">&#39;g g&#39;</span> <span class="o">=</span> <span class="s">move first</span>
+<span class="na">G</span> <span class="o">=</span> <span class="s">move last</span>
+<span class="na">&#39; &#39;</span> <span class="o">=</span> <span class="s">move page down</span>
+<span class="na">&#39;ctrl d&#39;</span> <span class="o">=</span> <span class="s">move halfpage down</span>
+<span class="na">&#39;ctrl u&#39;</span> <span class="o">=</span> <span class="s">move halfpage up</span>
+<span class="na">@</span> <span class="o">=</span> <span class="s">refresh</span>
+<span class="na">?</span> <span class="o">=</span> <span class="s">help bindings</span>
+<span class="na">I</span> <span class="o">=</span> <span class="s">search tag:inbox AND NOT tag:killed</span>
+<span class="na">&#39;#&#39;</span> <span class="o">=</span> <span class="s">taglist</span>
+<span class="na">shift tab</span> <span class="o">=</span> <span class="s">bprevious</span>
+<span class="na">U</span> <span class="o">=</span> <span class="s">search tag:unread</span>
+<span class="na">tab</span> <span class="o">=</span> <span class="s">bnext</span>
+<span class="na">\</span> <span class="o">=</span> <span class="s">prompt &#39;search &#39;</span>
+<span class="na">d</span> <span class="o">=</span> <span class="s">bclose</span>
+<span class="na">$</span> <span class="o">=</span> <span class="s">flush</span>
+<span class="na">m</span> <span class="o">=</span> <span class="s">compose</span>
+<span class="na">o</span> <span class="o">=</span> <span class="s">prompt &#39;search &#39;</span>
+<span class="na">q</span> <span class="o">=</span> <span class="s">exit</span>
+<span class="na">&#39;;&#39;</span> <span class="o">=</span> <span class="s">bufferlist</span>
+<span class="na">&#39;:&#39;</span> <span class="o">=</span> <span class="s">prompt</span>
+<span class="na">.</span> <span class="o">=</span> <span class="s">repeat</span>
+
+<span class="k">[bufferlist]</span>
+    <span class="na">x</span> <span class="o">=</span> <span class="s">close</span>
+<span class="s">    enter = open</span>
+
+<span class="k">[search]</span>
+    <span class="na">enter</span> <span class="o">=</span> <span class="s">select</span>
+<span class="s">    a = toggletags inbox</span>
+<span class="s">    &amp; = toggletags killed</span>
+<span class="s">    ! = toggletags flagged</span>
+<span class="s">    s = toggletags unread</span>
+<span class="s">    l = retagprompt</span>
+<span class="s">    O = refineprompt</span>
+<span class="s">    | = refineprompt</span>
+
+<span class="k">[envelope]</span>
+    <span class="na">a</span> <span class="o">=</span> <span class="s">prompt &#39;attach ~/&#39;</span>
+<span class="s">    y = send</span>
+<span class="s">    P = save</span>
+<span class="s">    s = &#39;refine Subject&#39;</span>
+<span class="s">    f = prompt &#39;set From &#39;</span>
+<span class="s">    t = &#39;refine To&#39;</span>
+<span class="s">    b = &#39;refine Bcc&#39;</span>
+<span class="s">    c = &#39;refine Cc&#39;</span>
+<span class="s">    S = togglesign</span>
+<span class="s">    enter = edit</span>
+<span class="s">    &#39;g f&#39; = togglesource</span>
+
+<span class="k">[taglist]</span>
+    <span class="na">enter</span> <span class="o">=</span> <span class="s">select</span>
+
+<span class="k">[namedqueries]</span>
+    <span class="na">enter</span> <span class="o">=</span> <span class="s">select</span>
+
+<span class="k">[thread]</span>
+    <span class="na">enter</span> <span class="o">=</span> <span class="s">select</span>
+<span class="s">    C = fold *</span>
+<span class="s">    E = unfold *</span>
+<span class="s">    c = fold</span>
+<span class="s">    e = unfold</span>
+<span class="s">    &lt; = fold</span>
+<span class="s">    &gt; = unfold</span>
+<span class="s">    [ = indent -</span>
+<span class="s">    ] = indent +</span>
+<span class="s">    &#39;g f&#39; = togglesource</span>
+<span class="s">    H = toggleheaders</span>
+<span class="s">    P = print --all --separately --add_tags</span>
+<span class="s">    S = save --all</span>
+<span class="s">    g = reply --all</span>
+<span class="s">    f = forward</span>
+<span class="s">    p = print --add_tags</span>
+<span class="s">    n = editnew</span>
+<span class="s">    b= bounce</span>
+<span class="s">    s = save</span>
+<span class="s">    r = reply</span>
+<span class="s">    | = prompt &#39;pipeto &#39;</span>
+
+    <span class="na">&#39;g j&#39;</span> <span class="o">=</span> <span class="s">move next sibling</span>
+<span class="s">    &#39;g k&#39; = move previous sibling</span>
+<span class="s">    &#39;g h&#39; = move parent</span>
+<span class="s">    &#39;g l&#39; = move first reply</span>
+<span class="s">    &#39; &#39; = move next</span>
+</pre></div>
+</div>
+<p>In prompts the following hardcoded bindings are available.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Key</th>
+<th class="head">Function</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Ctrl-f/b</td>
+<td>Moves the curser one character to the right/left</td>
+</tr>
+<tr class="row-odd"><td>Alt-f/b Shift-right/left</td>
+<td>Moves the cursor one word to the right/left</td>
+</tr>
+<tr class="row-even"><td>Ctrl-a/e</td>
+<td>Moves the curser to the beginning/end of the line</td>
+</tr>
+<tr class="row-odd"><td>Ctrl-d</td>
+<td>Deletes the character under the cursor</td>
+</tr>
+<tr class="row-even"><td>Alt-d</td>
+<td>Deletes everything from the cursor to the end of the current or next word</td>
+</tr>
+<tr class="row-odd"><td>Alt-Delete/Backspace Ctrl-w</td>
+<td>Deletes everything from the cursor to the beginning of the current or previous word</td>
+</tr>
+<tr class="row-even"><td>Ctrl-k</td>
+<td>Deletes everything from the cursor to the end of the line</td>
+</tr>
+<tr class="row-odd"><td>Ctrl-u</td>
+<td>Deletes everything from the cursor to the beginning of the line</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="overwriting-defaults">
+<h2>3.4.2. Overwriting defaults<a class="headerlink" href="#overwriting-defaults" title="Permalink to this headline">¶</a></h2>
+<p>To disable a global binding you can redefine it in your config to point to an empty command string.
+For example, to add a new global binding for key <cite>a</cite>, which is bound to <cite>toggletags inbox</cite> in search
+mode by default, you can remap it as follows.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[bindings]</span>
+  <span class="na">a</span> <span class="o">=</span> <span class="s">NEW GLOBAL COMMAND</span>
+
+  <span class="k">[[search]]</span>
+    <span class="na">a</span> <span class="o">=</span>
+</pre></div>
+</div>
+<p>If you omit the last two lines, <cite>a</cite> will still be bound to the default binding in search mode.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3.4. Key Bindings</a><ul>
+<li><a class="reference internal" href="#default-bindings">3.4.1. Default bindings</a></li>
+<li><a class="reference internal" href="#overwriting-defaults">3.4.2. Overwriting defaults</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="contacts_completion.html"
+                        title="previous chapter">3.3. Contacts Completion</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="hooks.html"
+                        title="next chapter">3.5. Hooks</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/configuration/key_bindings.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="hooks.html" title="3.5. Hooks"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="contacts_completion.html" title="3.3. Contacts Completion"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Alot User Manual</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >3. Configuration</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2014, Patrick Totzke.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+    </div>
+  </body>
+</html>

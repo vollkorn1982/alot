@@ -1,0 +1,483 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>3.5. Hooks &#8212; Alot User Manual</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3.6. Theming" href="theming.html" />
+    <link rel="prev" title="3.4. Key Bindings" href="key_bindings.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="theming.html" title="3.6. Theming"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="key_bindings.html" title="3.4. Key Bindings"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Alot User Manual</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">3. Configuration</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="hooks">
+<span id="config-hooks"></span><h1>3.5. Hooks<a class="headerlink" href="#hooks" title="Permalink to this headline">¶</a></h1>
+<p>Hooks are python callables that live in a module specified by <cite>hooksfile</cite> in
+the config. Per default this points to <code class="file docutils literal notranslate"><span class="pre">~/.config/alot/hooks.py</span></code>.</p>
+<div class="section" id="pre-post-command-hooks">
+<h2>3.5.1. Pre/Post Command Hooks<a class="headerlink" href="#pre-post-command-hooks" title="Permalink to this headline">¶</a></h2>
+<p>For every <a class="reference internal" href="../usage/index.html#usage-commands"><span class="std std-ref">COMMAND</span></a> in mode <a class="reference internal" href="key_bindings.html#modes"><span class="std std-ref">MODE</span></a>, the
+callables <code class="xref py py-func docutils literal notranslate"><span class="pre">pre_MODE_COMMAND()</span></code> and <code class="xref py py-func docutils literal notranslate"><span class="pre">post_MODE_COMMAND()</span></code> – if defined
+– will be called before and after the command is applied respectively.  In
+addition callables <code class="xref py py-func docutils literal notranslate"><span class="pre">pre_global_COMMAND()</span></code> and <code class="xref py py-func docutils literal notranslate"><span class="pre">post_global_COMMAND()</span></code>
+can be used. They will be called if no specific hook function for a mode is
+defined. The signature for the pre-<cite>send</cite> hook in envelope mode for example
+looks like this:</p>
+<dl class="function">
+<dt id="pre_envelope_send">
+<code class="descname">pre_envelope_send</code><span class="sig-paren">(</span><em>ui=None</em>, <em>dbm=None</em>, <em>cmd=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pre_envelope_send" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ui</strong> (<a class="reference internal" href="../api/interface.html#alot.ui.UI" title="alot.ui.UI"><code class="xref py py-class docutils literal notranslate"><span class="pre">alot.ui.UI</span></code></a>) – the main user interface</li>
+<li><strong>dbm</strong> (<a class="reference internal" href="../api/database.html#alot.db.manager.DBManager" title="alot.db.manager.DBManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">alot.db.manager.DBManager</span></code></a>) – a database manager</li>
+<li><strong>cmd</strong> (<a class="reference internal" href="../api/commands.html#alot.commands.Command" title="alot.commands.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">alot.commands.Command</span></code></a>) – the Command instance that is being called</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>Consider this pre-hook for the exit command, that logs a personalized goodbye
+message:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">alot.settings.const</span> <span class="k">import</span> <span class="n">settings</span>
+<span class="k">def</span> <span class="nf">pre_global_exit</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">accounts</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">get_accounts</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">accounts</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;goodbye, </span><span class="si">%s</span><span class="s1">!&#39;</span> <span class="o">%</span> <span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">realname</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;goodbye!&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="other-hooks">
+<h2>3.5.2. Other Hooks<a class="headerlink" href="#other-hooks" title="Permalink to this headline">¶</a></h2>
+<p>Apart from command pre- and posthooks, the following hooks will be interpreted:</p>
+<dl class="function">
+<dt id="reply_prefix">
+<code class="descname">reply_prefix</code><span class="sig-paren">(</span><em>realname</em>, <em>address</em>, <em>timestamp</em><span class="optional">[</span>, <em>ui= None</em>, <em>dbm=None</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#reply_prefix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is used to reformat the first indented line in a reply message.
+This defaults to ‘Quoting %s (%s)n’ % (realname, timestamp)’ unless this
+hook is defined</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>realname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – name or the original sender</li>
+<li><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – address of the sender</li>
+<li><strong>timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">datetime.datetime</span></code></a>) – value of the Date header of the replied message</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="forward_prefix">
+<code class="descname">forward_prefix</code><span class="sig-paren">(</span><em>realname</em>, <em>address</em>, <em>timestamp</em><span class="optional">[</span>, <em>ui= None</em>, <em>dbm=None</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#forward_prefix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is used to reformat the first indented line in a inline forwarded message.
+This defaults to ‘Forwarded message from %s (%s)n’ % (realname,
+timestamp)’ if this hook is undefined</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>realname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – name or the original sender</li>
+<li><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – address of the sender</li>
+<li><strong>timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">datetime.datetime</span></code></a>) – value of the Date header of the replied message</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="pre-edit-translate"></span><dl class="function">
+<dt id="pre_edit_translate">
+<code class="descname">pre_edit_translate</code><span class="sig-paren">(</span><em>text</em><span class="optional">[</span>, <em>ui= None</em>, <em>dbm=None</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#pre_edit_translate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used to manipulate a message’s text <em>before</em> the editor is called.  The
+text might also contain some header lines, depending on the settings
+<a class="reference internal" href="config_options.html#edit-headers-whitelist"><span class="std std-ref">edit_headers_whitelist</span></a> and
+<a class="reference internal" href="config_options.html#edit-headers-blacklist"><span class="std std-ref">edit_header_blacklist</span></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – text representation of mail as displayed in the interface and
+as sent to the editor</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="post_edit_translate">
+<code class="descname">post_edit_translate</code><span class="sig-paren">(</span><em>text</em><span class="optional">[</span>, <em>ui= None</em>, <em>dbm=None</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#post_edit_translate" title="Permalink to this definition">¶</a></dt>
+<dd><p>used to manipulate a message’s text <em>after</em> the editor is called, also see
+<a class="reference internal" href="#pre-edit-translate"><span class="std std-ref">pre_edit_translate</span></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – text representation of mail as displayed in the interface and
+as sent to the editor</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="text_quote">
+<code class="descname">text_quote</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#text_quote" title="Permalink to this definition">¶</a></dt>
+<dd><p>used to transform a message into a quoted one</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – message to be quoted</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="timestamp_format">
+<code class="descname">timestamp_format</code><span class="sig-paren">(</span><em>timestamp</em><span class="sig-paren">)</span><a class="headerlink" href="#timestamp_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>represents given timestamp as string</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>timestamp</strong> (<cite>datetime</cite>) – timestamp to represent</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="touch_external_cmdlist">
+<code class="descname">touch_external_cmdlist</code><span class="sig-paren">(</span><em>cmd</em>, <em>shell=shell</em>, <em>spawn=spawn</em>, <em>thread=thread</em><span class="sig-paren">)</span><a class="headerlink" href="#touch_external_cmdlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>used to change external commands according to given flags shortly
+before they are called.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cmd</strong> (<em>list of str</em>) – command to be called</li>
+<li><strong>shell</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – is this to be interpreted by the shell?</li>
+<li><strong>spawn</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – should be spawned in new terminal/environment</li>
+<li><strong>threads</strong> – should be called in new thread</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">triple of amended command list, shell and thread flags</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list of str, <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reply_subject">
+<code class="descname">reply_subject</code><span class="sig-paren">(</span><em>subject</em><span class="sig-paren">)</span><a class="headerlink" href="#reply_subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>used to reformat the subject header on reply</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>subject</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – subject to reformat</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="forward_subject">
+<code class="descname">forward_subject</code><span class="sig-paren">(</span><em>subject</em><span class="sig-paren">)</span><a class="headerlink" href="#forward_subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>used to reformat the subject header on forward</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>subject</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – subject to reformat</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pre_buffer_open">
+<code class="descname">pre_buffer_open</code><span class="sig-paren">(</span><em>ui= None</em>, <em>dbm=None</em>, <em>buf=buf</em><span class="sig-paren">)</span><a class="headerlink" href="#pre_buffer_open" title="Permalink to this definition">¶</a></dt>
+<dd><p>run before a new buffer is opened</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>buf</strong> (<em>alot.buffer.Buffer</em>) – buffer to open</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="post_buffer_open">
+<code class="descname">post_buffer_open</code><span class="sig-paren">(</span><em>ui=None</em>, <em>dbm=None</em>, <em>buf=buf</em><span class="sig-paren">)</span><a class="headerlink" href="#post_buffer_open" title="Permalink to this definition">¶</a></dt>
+<dd><p>run after a new buffer is opened</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>buf</strong> (<em>alot.buffer.Buffer</em>) – buffer to open</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pre_buffer_close">
+<code class="descname">pre_buffer_close</code><span class="sig-paren">(</span><em>ui=None</em>, <em>dbm=None</em>, <em>buf=buf</em><span class="sig-paren">)</span><a class="headerlink" href="#pre_buffer_close" title="Permalink to this definition">¶</a></dt>
+<dd><p>run before a buffer is closed</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>buf</strong> (<em>alot.buffer.Buffer</em>) – buffer to open</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="post_buffer_close">
+<code class="descname">post_buffer_close</code><span class="sig-paren">(</span><em>ui=None</em>, <em>dbm=None</em>, <em>buf=buf</em>, <em>success=success</em><span class="sig-paren">)</span><a class="headerlink" href="#post_buffer_close" title="Permalink to this definition">¶</a></dt>
+<dd><p>run after a buffer is closed</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>buf</strong> (<em>alot.buffer.Buffer</em>) – buffer to open</li>
+<li><strong>success</strong> (<em>boolean</em>) – true if successfully closed buffer</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pre_buffer_focus">
+<code class="descname">pre_buffer_focus</code><span class="sig-paren">(</span><em>ui=None</em>, <em>dbm=None</em>, <em>buf=buf</em><span class="sig-paren">)</span><a class="headerlink" href="#pre_buffer_focus" title="Permalink to this definition">¶</a></dt>
+<dd><p>run before a buffer is focused</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>buf</strong> (<em>alot.buffer.Buffer</em>) – buffer to open</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="post_buffer_focus">
+<code class="descname">post_buffer_focus</code><span class="sig-paren">(</span><em>ui=None</em>, <em>dbm=None</em>, <em>buf=buf</em>, <em>success=success</em><span class="sig-paren">)</span><a class="headerlink" href="#post_buffer_focus" title="Permalink to this definition">¶</a></dt>
+<dd><p>run after a buffer is focused</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>buf</strong> (<em>alot.buffer.Buffer</em>) – buffer to open</li>
+<li><strong>success</strong> (<em>boolean</em>) – true if successfully focused buffer</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="exit">
+<code class="descname">exit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#exit" title="Permalink to this definition">¶</a></dt>
+<dd><p>run just before the program exits</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sanitize_attachment_filename">
+<code class="descname">sanitize_attachment_filename</code><span class="sig-paren">(</span><em>filename=None</em>, <em>prefix=''</em>, <em>suffix=''</em><span class="sig-paren">)</span><a class="headerlink" href="#sanitize_attachment_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns <cite>prefix</cite> and <cite>suffix</cite> for a sanitized filename to use while
+opening an attachment.
+The <cite>prefix</cite> and <cite>suffix</cite> are used to open a file named
+<cite>prefix</cite> + <cite>XXXXXX</cite> + <cite>suffix</cite> in a temporary directory.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – filename provided in the email (can be None)</li>
+<li><strong>prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – prefix string as found on mailcap</li>
+<li><strong>suffix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – suffix string as found on mailcap</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">tuple of <cite>prefix</cite> and <cite>suffix</cite></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a>)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="loop_hook">
+<code class="descname">loop_hook</code><span class="sig-paren">(</span><em>ui=None</em><span class="sig-paren">)</span><a class="headerlink" href="#loop_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run on a period controlled by <a class="reference internal" href="config_options.html#periodic-hook-frequency"><span class="std std-ref">_periodic_hook_frequency</span></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ui</strong> (<a class="reference internal" href="../api/interface.html#alot.ui.UI" title="alot.ui.UI"><code class="xref py py-class docutils literal notranslate"><span class="pre">alot.ui.UI</span></code></a>) – the main user interface</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3.5. Hooks</a><ul>
+<li><a class="reference internal" href="#pre-post-command-hooks">3.5.1. Pre/Post Command Hooks</a></li>
+<li><a class="reference internal" href="#other-hooks">3.5.2. Other Hooks</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="key_bindings.html"
+                        title="previous chapter">3.4. Key Bindings</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="theming.html"
+                        title="next chapter">3.6. Theming</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/configuration/hooks.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="theming.html" title="3.6. Theming"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="key_bindings.html" title="3.4. Key Bindings"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Alot User Manual</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >3. Configuration</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2014, Patrick Totzke.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+    </div>
+  </body>
+</html>

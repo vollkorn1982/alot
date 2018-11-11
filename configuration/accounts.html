@@ -1,0 +1,507 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>3.2. Accounts &#8212; Alot User Manual</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3.3. Contacts Completion" href="contacts_completion.html" />
+    <link rel="prev" title="3.1. Configuration Options" href="config_options.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="contacts_completion.html" title="3.3. Contacts Completion"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="config_options.html" title="3.1. Configuration Options"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Alot User Manual</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">3. Configuration</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="accounts">
+<span id="config-accounts"></span><h1>3.2. Accounts<a class="headerlink" href="#accounts" title="Permalink to this headline">¶</a></h1>
+<p>In order to be able to send mails, you have to define at least one account subsection in your config:
+There needs to be a section “accounts”, and each subsection, indicated by double square brackets defines an account.</p>
+<p>Here is an example configuration</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[accounts]</span>
+    <span class="k">[[work]]</span>
+        <span class="na">realname</span> <span class="o">=</span> <span class="s">Bruce Wayne</span>
+<span class="s">        address = b.wayne@wayneenterprises.com</span>
+<span class="s">        alias_regexp = b.wayne\+.+@wayneenterprises.com</span>
+<span class="s">        gpg_key = D7D6C5AA</span>
+<span class="s">        sendmail_command = msmtp --account=wayne -t</span>
+<span class="s">        sent_box = maildir:///home/bruce/mail/work/Sent</span>
+<span class="s">        draft_box = maildir:///home/bruce/mail/work/Drafts</span>
+
+    <span class="k">[[secret]]</span>
+        <span class="na">realname</span> <span class="o">=</span> <span class="s">Batman</span>
+<span class="s">        address = batman@batcave.org</span>
+<span class="s">        aliases = batman@batmobile.org,</span>
+<span class="s">        sendmail_command = msmtp --account=batman -t</span>
+<span class="s">        signature = ~/.batman.vcf</span>
+<span class="s">        signature_as_attachment = True</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Sending mails is only supported via a sendmail shell command for now. If you want
+to use a sendmail command different from <cite>sendmail -t</cite>, specify it as <cite>sendmail_command</cite>.</p>
+</div>
+<p>The following entries are interpreted at the moment:</p>
+<span class="target" id="address"></span><dl class="describe">
+<dt>
+<code class="descname">address</code></dt>
+<dd><blockquote>
+<div>your main email address</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="alias-regexp"></span><dl class="describe">
+<dt>
+<code class="descname">alias_regexp</code></dt>
+<dd><blockquote>
+<div>a regex for catching further aliases (like + extensions).</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="aliases"></span><dl class="describe">
+<dt>
+<code class="descname">aliases</code></dt>
+<dd><blockquote>
+<div>used to clear your addresses/ match account when formatting replies</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">string list</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body">,</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="case-sensitive-username"></span><dl class="describe">
+<dt>
+<code class="descname">case_sensitive_username</code></dt>
+<dd><blockquote>
+<div><p>Whether the server treats the address as case-senstive or
+case-insensitve (True for the former, False for the latter)</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The vast majority (if not all) SMTP servers in modern use
+treat usernames as case insenstive, you should only set
+this if you know that you need it.</p>
+</div>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">boolean</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body">False</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="draft-box"></span><dl class="describe">
+<dt>
+<code class="descname">draft_box</code></dt>
+<dd><blockquote>
+<div><p>where to store draft mails, e.g. <cite>maildir:///home/you/mail/Drafts</cite>.
+You can use mbox, maildir, mh, babyl and mmdf in the protocol part of the URL.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You will most likely want drafts indexed by notmuch to be able to
+later access them within alot. This currently only works for
+maildir containers in a path below your notmuch database path.</p>
+</div>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">mail_container</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="draft-tags"></span><dl class="describe">
+<dt>
+<code class="descname">draft_tags</code></dt>
+<dd><blockquote>
+<div>list of tags to automatically add to draft messages</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">string list</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body">draft</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="encrypt-by-default"></span><dl class="describe">
+<dt>
+<code class="descname">encrypt_by_default</code></dt>
+<dd><blockquote>
+<div><p>Alot will try to GPG encrypt outgoing messages by default when this
+is set to <cite>all</cite> or <cite>trusted</cite>.  If set to <cite>all</cite> the message will be
+encrypted for all recipients for who a key is available in the key
+ring.  If set to <cite>trusted</cite> it will be encrypted to all
+recipients if a trusted key is available for all recipients (one
+where the user id for the key is signed with a trusted signature).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If the message will not be encrypted by default you can
+still use the <a class="reference internal" href="../usage/modes/envelope.html#cmd-envelope-toggleencrypt"><span class="std std-ref">toggleencrypt</span></a>, <a class="reference internal" href="../usage/modes/envelope.html#cmd-envelope-encrypt"><span class="std std-ref">encrypt</span></a> and <a class="reference internal" href="../usage/modes/envelope.html#cmd-envelope-unencrypt"><span class="std std-ref">unencrypt</span></a> commands to encrypt it.</p>
+</div>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 0.4: </span>The values <cite>True</cite> and <cite>False</cite> are interpreted as <cite>all</cite> and
+<cite>none</cite> respectively. <cite>0</cite>, <cite>1</cite>, <cite>true</cite>, <cite>True</cite>, <cite>false</cite>,
+<cite>False</cite>, <cite>yes</cite>, <cite>Yes</cite>, <cite>no</cite>, <cite>No</cite>, will be removed before
+1.0, please move to <cite>all</cite>, <cite>none</cite>, or <cite>trusted</cite>.</p>
+</div>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">option, one of [‘all’, ‘none’, ‘trusted’, ‘True’, ‘False’, ‘true’, ‘false’, ‘Yes’, ‘No’, ‘yes’, ‘no’, ‘1’, ‘0’]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body">none</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="encrypt-to-self"></span><dl class="describe">
+<dt>
+<code class="descname">encrypt_to_self</code></dt>
+<dd><blockquote>
+<div><p>If this is true when encrypting a message it will also be encrypted
+with the key defined for this account.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Before 0.6 this was controlled via gpg.conf.</p>
+</div>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">boolean</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body">True</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="gpg-key"></span><dl class="describe">
+<dt>
+<code class="descname">gpg_key</code></dt>
+<dd><blockquote>
+<div>The GPG key ID you want to use with this account.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="passed-tags"></span><dl class="describe">
+<dt>
+<code class="descname">passed_tags</code></dt>
+<dd><blockquote>
+<div>list of tags to automatically add to passed messages</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">string list</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body">passed</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="realname"></span><dl class="describe">
+<dt>
+<code class="descname">realname</code></dt>
+<dd><blockquote>
+<div>used to format the (proposed) From-header in outgoing mails</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="replied-tags"></span><dl class="describe">
+<dt>
+<code class="descname">replied_tags</code></dt>
+<dd><blockquote>
+<div>list of tags to automatically add to replied messages</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">string list</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body">replied</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="sendmail-command"></span><dl class="describe">
+<dt>
+<code class="descname">sendmail_command</code></dt>
+<dd><blockquote>
+<div>sendmail command. This is the shell command used to send out mails via the sendmail protocol</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body">“sendmail -t”</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="sent-box"></span><dl class="describe">
+<dt>
+<code class="descname">sent_box</code></dt>
+<dd><blockquote>
+<div><p>where to store outgoing mails, e.g. <cite>maildir:///home/you/mail/Sent</cite>.
+You can use mbox, maildir, mh, babyl and mmdf in the protocol part of the URL.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you want to add outgoing mails automatically to the notmuch index
+you must use maildir in a path within your notmuch database path.</p>
+</div>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">mail_container</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="sent-tags"></span><dl class="describe">
+<dt>
+<code class="descname">sent_tags</code></dt>
+<dd><blockquote>
+<div>list of tags to automatically add to outgoing messages</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">string list</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body">sent</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="sign-by-default"></span><dl class="describe">
+<dt>
+<code class="descname">sign_by_default</code></dt>
+<dd><blockquote>
+<div>Outgoing messages will be GPG signed by default if this is set to True.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">boolean</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body">False</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="signature"></span><dl class="describe">
+<dt>
+<code class="descname">signature</code></dt>
+<dd><blockquote>
+<div>path to signature file that gets attached to all outgoing mails from this account, optionally
+renamed to <a class="reference internal" href="#signature-filename"><span class="std std-ref">signature_filename</span></a>.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="signature-as-attachment"></span><dl class="describe">
+<dt>
+<code class="descname">signature_as_attachment</code></dt>
+<dd><blockquote>
+<div>attach signature file if set to True, append its content (mimetype text)
+to the body text if set to False.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">boolean</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body">False</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="signature-filename"></span><dl class="describe">
+<dt>
+<code class="descname">signature_filename</code></dt>
+<dd><blockquote>
+<div>signature file’s name as it appears in outgoing mails if
+<a class="reference internal" href="#signature-as-attachment"><span class="std std-ref">signature_as_attachment</span></a> is set to True</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="config_options.html"
+                        title="previous chapter">3.1. Configuration Options</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="contacts_completion.html"
+                        title="next chapter">3.3. Contacts Completion</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/configuration/accounts.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="contacts_completion.html" title="3.3. Contacts Completion"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="config_options.html" title="3.1. Configuration Options"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Alot User Manual</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >3. Configuration</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2014, Patrick Totzke.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+    </div>
+  </body>
+</html>

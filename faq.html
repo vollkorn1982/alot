@@ -1,0 +1,194 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>5. FAQ &#8212; Alot User Manual</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Manpage" href="manpage.html" />
+    <link rel="prev" title="4.7. Crypto" href="api/crypto.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="manpage.html" title="Manpage"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/crypto.html" title="4.7. Crypto"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Alot User Manual</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="faq">
+<h1>5. FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic">
+<li><p class="first">Why reinvent the wheel? Why not extend an existing MUA to work nicely with notmuch?</p>
+<blockquote>
+<div><p>alot makes use of existing solutions where possible: It does not fetch, send or edit
+mails; it lets <a class="reference external" href="http://notmuchmail.org">notmuch</a> handle your mailindex and uses a
+<a class="reference external" href="http://excess.org/urwid/">toolkit</a> to render its display. You are responsible for
+<a class="reference external" href="http://notmuchmail.org/initial_tagging/">automatic initial tagging</a>.</p>
+<p>This said, there are few CLI MUAs that could be easily and naturally adapted to using notmuch.
+Rebuilding an interface from scratch using <a class="reference external" href="http://www.python.org/">friendly and extensible tools</a>
+seemed easier and more promising.</p>
+<p>Update: see <a class="reference external" href="https://github.com/karelzak/mutt-kz">mutt-kz</a> for a fork of mutt..</p>
+</div></blockquote>
+</li>
+<li><p class="first">What’s with the snotty name?</p>
+<blockquote>
+<div><p>It’s not meant to be presumptuous. I like the dichotomy; I like to picture the look on
+someone’s face who reads the <em class="mailheader">User-Agent</em> header “notmuch/alot”; I like cookies; I like
+<a class="reference external" href="http://hyperboleandahalf.blogspot.com/2010/04/alot-is-better-than-you-at-everything.html">this comic strip</a>.</p>
+</div></blockquote>
+</li>
+<li><p class="first">I want feature X!</p>
+<blockquote>
+<div><p>Me too! Feel free to file a new or comment on existing
+<a class="reference external" href="https://github.com/pazz/alot/issues">issues</a> if you don’t want/have the time/know how to
+implement it yourself. Be verbose as to how it should look or work when it’s finished and
+give it some thought how you think we should implement it. We’ll discuss it from there.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Why are the default key bindings so counter-intuitive?</p>
+<blockquote>
+<div><p>Be aware that the bindings for all modes are <a class="reference internal" href="configuration/key_bindings.html#config-key-bindings"><span class="std std-ref">fully configurable</span></a>.
+That said, I choose the bindings to be natural for me. I use <a class="reference external" href="http://www.vim.org">vim</a> and
+<a class="reference external" href="http://dactyl.sourceforge.net/pentadactyl/">pentadactyl</a> a lot.  However, I’d be
+interested in discussing the defaults. If you think your bindings are more intuitive or
+better suited as defaults for some reason, don’t hesitate to send me your config. The same
+holds for the theme settings you use.  Tell me. Let’s improve the defaults.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Help! I don’t see <cite>text/html</cite> content!</p>
+<blockquote>
+<div><p>better: How do I properly set up an inline renderer for <cite>text/html</cite>?
+Try <a class="reference external" href="http://w3m.sourceforge.net/">w3m</a> and put the following into your
+<code class="file docutils literal notranslate"><span class="pre">~/.mailcap</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">text</span><span class="o">/</span><span class="n">html</span><span class="p">;</span>  <span class="n">w3m</span> <span class="o">-</span><span class="n">dump</span> <span class="o">-</span><span class="n">o</span> <span class="n">document_charset</span><span class="o">=%</span><span class="p">{</span><span class="n">charset</span><span class="p">}</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">;</span> <span class="n">nametemplate</span><span class="o">=%</span><span class="n">s</span><span class="o">.</span><span class="n">html</span><span class="p">;</span> <span class="n">copiousoutput</span>
+</pre></div>
+</div>
+<p>Most <a class="reference external" href="http://en.wikipedia.org/wiki/Text-based_web_browser">text based browsers</a> have
+a dump mode that can be used here.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Why are you doing $THIS not $THAT way?</p>
+<blockquote>
+<div><p>Lazyness and Ignorance: In most cases I simply did not or still don’t know a better solution.
+I try to outsource as much as I can to well established libraries and be it only to avoid
+having to read rfc’s. But there are lots
+of tasks I implemented myself, possibly overlooking a ready made and available solution.
+Twisted is such a feature-rich but gray area in my mind for example.
+If you think you know how to improve the current implementation let me know!</p>
+<p>The few exceptions to above stated rule are the following:</p>
+<ul class="simple">
+<li>The modules cmd and cmd2, that handle all sorts of convenience around command objects
+hate urwid: They are painfully strongly coupled to user in/output via stdin and out.</li>
+<li><cite>notmuch reply</cite> is not used to format reply messages because 1. it is not offered by
+notmuch’s library but is a feature of the CLI. This means we would have to call the notmuch
+binary, something that is avoided where possible. 2. As there is no <cite>notmuch forward</cite> equivalent,
+this (very similar) functionality would have to be re-implemented anyway.</li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+<ol class="arabic" id="faq-7" start="7">
+<li><p class="first">I thought alot ran on Python 2?</p>
+<p>It used to. When we made the transition to Python 3 we didn’t maintain
+Python 2 support. If you still need Python 2 support the 0.7 release is your
+best bet.</p>
+</li>
+</ol>
+<ol class="arabic" id="faq-8" start="8">
+<li><p class="first">I thought alot used twisted?</p>
+<p>It used to. After we switched to python 3 we decided to switch to asyncio,
+which reduced the number of dependencies we have. Twisted is an especially
+heavy dependency, when we only used their async mechanisms, and not any of
+the other goodness that twisted has to offer.</p>
+</li>
+</ol>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="api/crypto.html"
+                        title="previous chapter">4.7. Crypto</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="manpage.html"
+                        title="next chapter">Manpage</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/faq.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="manpage.html" title="Manpage"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="api/crypto.html" title="4.7. Crypto"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Alot User Manual</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2014, Patrick Totzke.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+    </div>
+  </body>
+</html>

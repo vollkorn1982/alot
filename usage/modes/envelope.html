@@ -1,0 +1,333 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>2.4.3. Commands in envelope mode &#8212; Alot User Manual</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2.4.4. Commands in namedqueries mode" href="namedqueries.html" />
+    <link rel="prev" title="2.4.2. Commands in bufferlist mode" href="bufferlist.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="namedqueries.html" title="2.4.4. Commands in namedqueries mode"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="bufferlist.html" title="2.4.2. Commands in bufferlist mode"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Alot User Manual</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">2. Usage</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="commands-in-envelope-mode">
+<h1>2.4.3. Commands in <cite>envelope</cite> mode<a class="headerlink" href="#commands-in-envelope-mode" title="Permalink to this headline">¶</a></h1>
+<p>The following commands are available in envelope mode:</p>
+<span class="target" id="cmd-envelope-attach"></span><dl class="describe">
+<dt>
+<code class="descname">attach</code></dt>
+<dd><p>attach files to the mail</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>file(s) to attach (accepts wildcads)</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-envelope-edit"></span><dl class="describe">
+<dt>
+<code class="descname">edit</code></dt>
+<dd><p>edit mail</p>
+<dl class="docutils">
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—spawn:</th><td class="field-body">spawn editor in new terminal</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—refocus:</th><td class="field-body">refocus envelope after editing (defaults to: ‘True’)</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-envelope-encrypt"></span><dl class="describe">
+<dt>
+<code class="descname">encrypt</code></dt>
+<dd><p>request encryption of message before sendout</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>keyid of the key to encrypt with</dd>
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—trusted:</th><td class="field-body">only add trusted keys</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-envelope-refine"></span><dl class="describe">
+<dt>
+<code class="descname">refine</code></dt>
+<dd><p>prompt to change the value of a header</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>header to refine</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-envelope-retag"></span><dl class="describe">
+<dt>
+<code class="descname">retag</code></dt>
+<dd><p>set message tags</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>comma separated list of tags</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-envelope-rmencrypt"></span><dl class="describe">
+<dt>
+<code class="descname">rmencrypt</code></dt>
+<dd><p>do not encrypt to given recipient key</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>keyid of the key to encrypt with</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-envelope-save"></span><dl class="describe">
+<dt>
+<code class="descname">save</code></dt>
+<dd><p>save draft</p>
+</dd></dl>
+
+<span class="target" id="cmd-envelope-send"></span><dl class="describe">
+<dt>
+<code class="descname">send</code></dt>
+<dd><p>send mail</p>
+</dd></dl>
+
+<span class="target" id="cmd-envelope-set"></span><dl class="describe">
+<dt>
+<code class="descname">set</code></dt>
+<dd><p>set header value</p>
+<dl class="docutils">
+<dt>positional arguments</dt>
+<dd>0: header to refine
+1: value</dd>
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—append:</th><td class="field-body">keep previous values</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-envelope-sign"></span><dl class="describe">
+<dt>
+<code class="descname">sign</code></dt>
+<dd><p>mark mail to be signed before sending</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>which key id to use</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-envelope-tag"></span><dl class="describe">
+<dt>
+<code class="descname">tag</code></dt>
+<dd><p>add tags to message</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>comma separated list of tags</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-envelope-toggleencrypt"></span><dl class="describe">
+<dt>
+<code class="descname">toggleencrypt</code></dt>
+<dd><p>toggle if message should be encrypted before sendout</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>keyid of the key to encrypt with</dd>
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—trusted:</th><td class="field-body">only add trusted keys</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-envelope-toggleheaders"></span><dl class="describe">
+<dt>
+<code class="descname">toggleheaders</code></dt>
+<dd><p>toggle display of all headers</p>
+</dd></dl>
+
+<span class="target" id="cmd-envelope-togglesign"></span><dl class="describe">
+<dt>
+<code class="descname">togglesign</code></dt>
+<dd><p>toggle sign status</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>which key id to use</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-envelope-toggletags"></span><dl class="describe">
+<dt>
+<code class="descname">toggletags</code></dt>
+<dd><p>flip presence of tags on message</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>comma separated list of tags</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-envelope-unattach"></span><dl class="describe">
+<dt>
+<code class="descname">unattach</code></dt>
+<dd><p>remove attachments from current envelope</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>which attached file to remove</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-envelope-unencrypt"></span><dl class="describe">
+<dt>
+<code class="descname">unencrypt</code></dt>
+<dd><p>remove request to encrypt message before sending</p>
+</dd></dl>
+
+<span class="target" id="cmd-envelope-unset"></span><dl class="describe">
+<dt>
+<code class="descname">unset</code></dt>
+<dd><p>remove header field</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>header to refine</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-envelope-unsign"></span><dl class="describe">
+<dt>
+<code class="descname">unsign</code></dt>
+<dd><p>mark mail not to be signed before sending</p>
+</dd></dl>
+
+<span class="target" id="cmd-envelope-untag"></span><dl class="describe">
+<dt>
+<code class="descname">untag</code></dt>
+<dd><p>remove tags from message</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>comma separated list of tags</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="bufferlist.html"
+                        title="previous chapter">2.4.2. Commands in <cite>bufferlist</cite> mode</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="namedqueries.html"
+                        title="next chapter">2.4.4. Commands in <cite>namedqueries</cite> mode</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/usage/modes/envelope.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="namedqueries.html" title="2.4.4. Commands in namedqueries mode"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="bufferlist.html" title="2.4.2. Commands in bufferlist mode"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Alot User Manual</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >2. Usage</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2014, Patrick Totzke.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+    </div>
+  </body>
+</html>

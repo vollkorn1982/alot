@@ -1,0 +1,277 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>2.4.5. Commands in search mode &#8212; Alot User Manual</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2.4.6. Commands in taglist mode" href="taglist.html" />
+    <link rel="prev" title="2.4.4. Commands in namedqueries mode" href="namedqueries.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="taglist.html" title="2.4.6. Commands in taglist mode"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="namedqueries.html" title="2.4.4. Commands in namedqueries mode"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Alot User Manual</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">2. Usage</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="commands-in-search-mode">
+<h1>2.4.5. Commands in <cite>search</cite> mode<a class="headerlink" href="#commands-in-search-mode" title="Permalink to this headline">¶</a></h1>
+<p>The following commands are available in search mode:</p>
+<span class="target" id="cmd-search-move"></span><dl class="describe">
+<dt>
+<code class="descname">move</code></dt>
+<dd><p>move focus in search buffer</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>last</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-search-refine"></span><dl class="describe">
+<dt>
+<code class="descname">refine</code></dt>
+<dd><p>refine query</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>search string</dd>
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—sort:</th><td class="field-body">sort order; valid choices are: `oldest_first`,`newest_first`,`message_id`,`unsorted`</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-search-refineprompt"></span><dl class="describe">
+<dt>
+<code class="descname">refineprompt</code></dt>
+<dd><p>prompt to change this buffers querystring</p>
+</dd></dl>
+
+<span class="target" id="cmd-search-retag"></span><dl class="describe">
+<dt>
+<code class="descname">retag</code></dt>
+<dd><p>set tags of all messages in the thread that match the current query</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>comma separated list of tags</dd>
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—no-flush:</th><td class="field-body">postpone a writeout to the index (defaults to: ‘True’)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—all:</th><td class="field-body">retag all messages in search result</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-search-retagprompt"></span><dl class="describe">
+<dt>
+<code class="descname">retagprompt</code></dt>
+<dd><p>prompt to retag selected thread’s or message’s tags</p>
+</dd></dl>
+
+<span class="target" id="cmd-search-savequery"></span><dl class="describe">
+<dt>
+<code class="descname">savequery</code></dt>
+<dd><p>store query string as a “named query” in the database. This falls back to the current search query in search buffers.</p>
+<dl class="docutils">
+<dt>positional arguments</dt>
+<dd>0: alias to use for query string
+1: query string to store</dd>
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—no-flush:</th><td class="field-body">postpone a writeout to the index (defaults to: ‘True’)</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-search-select"></span><dl class="describe">
+<dt>
+<code class="descname">select</code></dt>
+<dd><p>open thread in a new buffer</p>
+</dd></dl>
+
+<span class="target" id="cmd-search-sort"></span><dl class="describe">
+<dt>
+<code class="descname">sort</code></dt>
+<dd><p>set sort order</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>sort order; valid choices are: `oldest_first`,`newest_first`,`message_id`,`unsorted`</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-search-tag"></span><dl class="describe">
+<dt>
+<code class="descname">tag</code></dt>
+<dd><p>add tags to all messages in the thread that match the current query</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>comma separated list of tags</dd>
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—no-flush:</th><td class="field-body">postpone a writeout to the index (defaults to: ‘True’)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—all:</th><td class="field-body">retag all messages in search result</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-search-toggletags"></span><dl class="describe">
+<dt>
+<code class="descname">toggletags</code></dt>
+<dd><p>flip presence of tags on this thread: a tag is considered present and will be removed if at least one message in this thread is tagged with it</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>comma separated list of tags</dd>
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—no-flush:</th><td class="field-body">postpone a writeout to the index (defaults to: ‘True’)</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-search-untag"></span><dl class="describe">
+<dt>
+<code class="descname">untag</code></dt>
+<dd><p>remove tags from all messages in the thread that match the query</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>comma separated list of tags</dd>
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—no-flush:</th><td class="field-body">postpone a writeout to the index (defaults to: ‘True’)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—all:</th><td class="field-body">retag all messages in search result</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="namedqueries.html"
+                        title="previous chapter">2.4.4. Commands in <cite>namedqueries</cite> mode</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="taglist.html"
+                        title="next chapter">2.4.6. Commands in <cite>taglist</cite> mode</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/usage/modes/search.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="taglist.html" title="2.4.6. Commands in taglist mode"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="namedqueries.html" title="2.4.4. Commands in namedqueries mode"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Alot User Manual</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >2. Usage</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2014, Patrick Totzke.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+    </div>
+  </body>
+</html>

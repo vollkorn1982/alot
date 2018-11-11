@@ -1,0 +1,386 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>2.4.1. Global commands &#8212; Alot User Manual</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2.4.2. Commands in bufferlist mode" href="bufferlist.html" />
+    <link rel="prev" title="2. Usage" href="../index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="bufferlist.html" title="2.4.2. Commands in bufferlist mode"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="2. Usage"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Alot User Manual</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">2. Usage</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="global-commands">
+<h1>2.4.1. Global commands<a class="headerlink" href="#global-commands" title="Permalink to this headline">¶</a></h1>
+<p>The following commands are available globally:</p>
+<span class="target" id="cmd-global-bclose"></span><dl class="describe">
+<dt>
+<code class="descname">bclose</code></dt>
+<dd><p>close a buffer</p>
+<dl class="docutils">
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—redraw:</th><td class="field-body">redraw current buffer after command has finished</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—force:</th><td class="field-body">never ask for confirmation</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-global-bnext"></span><dl class="describe">
+<dt>
+<code class="descname">bnext</code></dt>
+<dd><p>focus next buffer</p>
+</dd></dl>
+
+<span class="target" id="cmd-global-bprevious"></span><dl class="describe">
+<dt>
+<code class="descname">bprevious</code></dt>
+<dd><p>focus previous buffer</p>
+</dd></dl>
+
+<span class="target" id="cmd-global-buffer"></span><dl class="describe">
+<dt>
+<code class="descname">buffer</code></dt>
+<dd><p>focus buffer with given index</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>buffer index to focus</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-global-bufferlist"></span><dl class="describe">
+<dt>
+<code class="descname">bufferlist</code></dt>
+<dd><p>open a list of active buffers</p>
+</dd></dl>
+
+<span class="target" id="cmd-global-call"></span><dl class="describe">
+<dt>
+<code class="descname">call</code></dt>
+<dd><p>execute python code</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>python command string to call</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-global-compose"></span><dl class="describe">
+<dt>
+<code class="descname">compose</code></dt>
+<dd><p>compose a new email</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>None</dd>
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—sender:</th><td class="field-body">sender</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—template:</th><td class="field-body">path to a template message file</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">—tags:</th><td class="field-body">comma-separated list of tags to apply to message</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—subject:</th><td class="field-body">subject line</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">—to:</th><td class="field-body">recipients</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—cc:</th><td class="field-body">copy to</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">—bcc:</th><td class="field-body">blind copy to</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—attach:</th><td class="field-body">attach files</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">—omit_signature:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">do not add signature</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—spawn:</th><td class="field-body">spawn editor in new terminal</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-global-exit"></span><dl class="describe">
+<dt>
+<code class="descname">exit</code></dt>
+<dd><p>shut down cleanly</p>
+</dd></dl>
+
+<span class="target" id="cmd-global-flush"></span><dl class="describe">
+<dt>
+<code class="descname">flush</code></dt>
+<dd><p>flush write operations or retry until committed</p>
+</dd></dl>
+
+<span class="target" id="cmd-global-help"></span><dl class="describe">
+<dt>
+<code class="descname">help</code></dt>
+<dd><p>display help for a command (use ‘bindings’ to display all keybindings
+interpreted in current mode)</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>command or ‘bindings’</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-global-move"></span><dl class="describe">
+<dt>
+<code class="descname">move</code></dt>
+<dd><p>move focus in current buffer</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>up, down, [half]page up, [half]page down, first, last</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-global-namedqueries"></span><dl class="describe">
+<dt>
+<code class="descname">namedqueries</code></dt>
+<dd><p>opens named queries buffer</p>
+</dd></dl>
+
+<span class="target" id="cmd-global-prompt"></span><dl class="describe">
+<dt>
+<code class="descname">prompt</code></dt>
+<dd><p>prompts for commandline and interprets it upon select</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>initial content</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-global-pyshell"></span><dl class="describe">
+<dt>
+<code class="descname">pyshell</code></dt>
+<dd><p>open an interactive python shell for introspection</p>
+</dd></dl>
+
+<span class="target" id="cmd-global-refresh"></span><dl class="describe">
+<dt>
+<code class="descname">refresh</code></dt>
+<dd><p>refresh the current buffer</p>
+</dd></dl>
+
+<span class="target" id="cmd-global-reload"></span><dl class="describe">
+<dt>
+<code class="descname">reload</code></dt>
+<dd><p>reload all configuration files</p>
+</dd></dl>
+
+<span class="target" id="cmd-global-removequery"></span><dl class="describe">
+<dt>
+<code class="descname">removequery</code></dt>
+<dd><p>removes a “named query” from the database</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>alias to remove</dd>
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—no-flush:</th><td class="field-body">postpone a writeout to the index (defaults to: ‘True’)</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-global-repeat"></span><dl class="describe">
+<dt>
+<code class="descname">repeat</code></dt>
+<dd><p>repeat the command executed last time</p>
+</dd></dl>
+
+<span class="target" id="cmd-global-savequery"></span><dl class="describe">
+<dt>
+<code class="descname">savequery</code></dt>
+<dd><p>store query string as a “named query” in the database</p>
+<dl class="docutils">
+<dt>positional arguments</dt>
+<dd>0: alias to use for query string
+1: query string to store</dd>
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—no-flush:</th><td class="field-body">postpone a writeout to the index (defaults to: ‘True’)</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-global-search"></span><dl class="describe">
+<dt>
+<code class="descname">search</code></dt>
+<dd><p>open a new search buffer. Search obeys the notmuch
+<a class="reference internal" href="../../configuration/config_options.html#search-exclude-tags"><span class="std std-ref">search.exclude_tags</span></a> setting.</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>search string</dd>
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—sort:</th><td class="field-body">sort order; valid choices are: `oldest_first`,`newest_first`,`message_id`,`unsorted`</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-global-shellescape"></span><dl class="describe">
+<dt>
+<code class="descname">shellescape</code></dt>
+<dd><p>run external command</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>command line to execute</dd>
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—spawn:</th><td class="field-body">run in terminal window</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—thread:</th><td class="field-body">run in separate thread</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">—refocus:</th><td class="field-body">refocus current buffer after command has finished</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-global-taglist"></span><dl class="describe">
+<dt>
+<code class="descname">taglist</code></dt>
+<dd><p>opens taglist buffer</p>
+<dl class="docutils">
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—tags:</th><td class="field-body">tags to display</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../index.html"
+                        title="previous chapter">2. Usage</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="bufferlist.html"
+                        title="next chapter">2.4.2. Commands in <cite>bufferlist</cite> mode</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/usage/modes/global.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="bufferlist.html" title="2.4.2. Commands in bufferlist mode"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="2. Usage"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Alot User Manual</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >2. Usage</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2014, Patrick Totzke.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+    </div>
+  </body>
+</html>

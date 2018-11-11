@@ -1,0 +1,166 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>1. Installation &#8212; Alot User Manual</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2. Usage" href="usage/index.html" />
+    <link rel="prev" title="User Manual" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="usage/index.html" title="2. Usage"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="User Manual"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Alot User Manual</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="installation">
+<h1>1. Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">dependencies</p>
+<p>Alot depends on recent versions of notmuch and urwid. Note that due to restrictions
+on argparse and subprocess, you need to run <em>`python ≥ `3.5`</em> (see <a class="reference internal" href="faq.html#faq-7"><span class="std std-ref">faq</span></a>).
+A full list of dependencies is below:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://darwinsys.com/file/">libmagic and python bindings</a>, ≥ <cite>5.04</cite></li>
+<li><a class="reference external" href="http://www.voidspace.org.uk/python/configobj.html">configobj</a>, ≥ <cite>4.7.0</cite></li>
+<li><a class="reference external" href="http://notmuchmail.org/">libnotmuch</a> and it’s python bindings, ≥ <cite>0.13</cite></li>
+<li><a class="reference external" href="http://excess.org/urwid/">urwid</a> toolkit, ≥ <cite>1.3.0</cite></li>
+<li><a class="reference external" href="https://github.com/pazz/urwidtrees">urwidtrees</a>, ≥ <cite>1.0</cite></li>
+<li><a class="reference external" href="http://www.gnupg.org/related_software/gpgme">gpg</a> and it’s python bindings, ≥ <cite>1.9.0</cite></li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>urwidtrees was only recently detached from alot and is not widely
+available as a separate package. You can install it e.g., via
+<a class="reference external" href="https://pypi.python.org/pypi/pip">pip</a> directly from github:</p>
+<div class="last highlight-sh notranslate"><div class="highlight"><pre><span></span>pip install --user https://github.com/pazz/urwidtrees/archive/master.zip
+</pre></div>
+</div>
+</div>
+<p>On debian/ubuntu the rest are packaged as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span><span class="o">-</span><span class="n">setuptools</span> <span class="n">python</span><span class="o">-</span><span class="n">magic</span> <span class="n">python</span><span class="o">-</span><span class="n">configobj</span> <span class="n">python</span><span class="o">-</span><span class="n">notmuch</span> <span class="n">python</span><span class="o">-</span><span class="n">urwid</span> <span class="n">python</span><span class="o">-</span><span class="n">gpg</span>
+</pre></div>
+</div>
+<p>On fedora/redhat these are packaged as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span><span class="o">-</span><span class="n">setuptools</span> <span class="n">python</span><span class="o">-</span><span class="n">magic</span> <span class="n">python</span><span class="o">-</span><span class="n">configobj</span> <span class="n">python</span><span class="o">-</span><span class="n">notmuch</span> <span class="n">python</span><span class="o">-</span><span class="n">urwid</span> <span class="n">python</span><span class="o">-</span><span class="n">gpg</span>
+</pre></div>
+</div>
+<p>Alot uses <a class="reference external" href="http://en.wikipedia.org/wiki/Mailcap">mailcap</a> to look up mime-handler for inline
+rendering and opening of attachments.  For a full description of the maicap protocol consider the
+manpage <em class="manpage">mailcap(5)</em> or <span class="target" id="index-0"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc1524.html"><strong>RFC 1524</strong></a>. To avoid surprises you should at least have an inline
+renderer (copiousoutput) set up for <cite>text/html</cite>, i.e. have something like this in your
+<code class="file docutils literal notranslate"><span class="pre">~/.mailcap</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">text</span><span class="o">/</span><span class="n">html</span><span class="p">;</span>  <span class="n">w3m</span> <span class="o">-</span><span class="n">dump</span> <span class="o">-</span><span class="n">o</span> <span class="n">document_charset</span><span class="o">=%</span><span class="p">{</span><span class="n">charset</span><span class="p">}</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">;</span> <span class="n">nametemplate</span><span class="o">=%</span><span class="n">s</span><span class="o">.</span><span class="n">html</span><span class="p">;</span> <span class="n">copiousoutput</span>
+</pre></div>
+</div>
+<p class="rubric">get and install alot</p>
+<p>You can use <cite>pip</cite> to install directly from GitHub:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install --user https://github.com/pazz/alot/archive/master.zip
+</pre></div>
+</div>
+<p>Don’t have pip installed? Just download and extract, then run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span>
+</pre></div>
+</div>
+<p>Make sure <code class="file docutils literal notranslate"><span class="pre">~/.local/bin</span></code> is in your <span class="target" id="index-1"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">PATH</span></code>. For system-wide
+installation omit the <cite>–user</cite> flag and call with the respective permissions.</p>
+<p class="rubric">generate manual and manpage</p>
+<p>To generate the documentation you need <a class="reference external" href="http://sphinx.pocoo.org/">sphinx</a>, ≥ <cite>1.07</cite> installed.
+Go to <code class="file docutils literal notranslate"><span class="pre">docs/</span></code> and do a:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">html</span>
+<span class="n">make</span> <span class="n">man</span>
+</pre></div>
+</div>
+<p>to generate the user manual and a man page. Both will end up in their respective subfolders in
+<code class="file docutils literal notranslate"><span class="pre">docs/build</span></code>.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">User Manual</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="usage/index.html"
+                        title="next chapter">2. Usage</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/installation.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="usage/index.html" title="2. Usage"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="User Manual"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Alot User Manual</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2014, Patrick Totzke.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+    </div>
+  </body>
+</html>

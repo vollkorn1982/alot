@@ -1,0 +1,935 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>4.4. User Settings &#8212; Alot User Manual</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4.5. Utils" href="utils.html" />
+    <link rel="prev" title="4.3. User Interface" href="interface.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="utils.html" title="4.5. Utils"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="interface.html" title="4.3. User Interface"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Alot User Manual</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">4. API and Development</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-alot.settings.manager">
+<span id="user-settings"></span><h1>4.4. User Settings<a class="headerlink" href="#module-alot.settings.manager" title="Permalink to this headline">¶</a></h1>
+<p>Alot sets up a <a class="reference internal" href="#alot.settings.manager.SettingsManager" title="alot.settings.manager.SettingsManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">SettingsManager</span></code></a> to access user settings
+defined in different places uniformly.
+There are four types of user settings:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="31%" />
+<col width="30%" />
+<col width="39%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">what?</th>
+<th class="head">location</th>
+<th class="head">accessible via</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>alot config</td>
+<td><code class="file docutils literal notranslate"><span class="pre">~/.config/alot/config</span></code>
+or given by command option <cite>-c</cite>.</td>
+<td><a class="reference internal" href="#alot.settings.manager.SettingsManager.get" title="alot.settings.manager.SettingsManager.get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SettingsManager.get()</span></code></a></td>
+</tr>
+<tr class="row-odd"><td>hooks – user provided python code</td>
+<td><code class="file docutils literal notranslate"><span class="pre">~/.config/alot/hooks.py</span></code>
+or as given by the <cite>hooksfile</cite>
+config value</td>
+<td><a class="reference internal" href="#alot.settings.manager.SettingsManager.get_hook" title="alot.settings.manager.SettingsManager.get_hook"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SettingsManager.get_hook()</span></code></a></td>
+</tr>
+<tr class="row-even"><td>notmuch config</td>
+<td><code class="file docutils literal notranslate"><span class="pre">~/.notmuch-config</span></code> or
+given by <cite>$NOTMUCH_CONFIG</cite> or
+given by command option <cite>-n</cite></td>
+<td><a class="reference internal" href="#alot.settings.manager.SettingsManager.get_notmuch_setting" title="alot.settings.manager.SettingsManager.get_notmuch_setting"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SettingsManager.get_notmuch_setting()</span></code></a></td>
+</tr>
+<tr class="row-odd"><td>mailcap – defines shellcommands
+to handle mime types</td>
+<td><code class="file docutils literal notranslate"><span class="pre">~/.mailcap</span></code>
+(<code class="file docutils literal notranslate"><span class="pre">/etc/mailcap</span></code>)</td>
+<td><a class="reference internal" href="#alot.settings.manager.SettingsManager.mailcap_find_match" title="alot.settings.manager.SettingsManager.mailcap_find_match"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SettingsManager.mailcap_find_match()</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="settings-manager">
+<h2>4.4.1. Settings Manager<a class="headerlink" href="#settings-manager" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="alot.settings.manager.SettingsManager">
+<em class="property">class </em><code class="descclassname">alot.settings.manager.</code><code class="descname">SettingsManager</code><a class="headerlink" href="#alot.settings.manager.SettingsManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Organizes user settings</p>
+<dl class="method">
+<dt id="alot.settings.manager.SettingsManager.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>key</em>, <em>fallback=None</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.manager.SettingsManager.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>look up global config values from alot’s config</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – key to look up</li>
+<li><strong>fallback</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – fallback returned if key is not present</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">config value with type as specified in the spec-file</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.settings.manager.SettingsManager.get_account_by_address">
+<code class="descname">get_account_by_address</code><span class="sig-paren">(</span><em>address</em>, <em>return_default=False</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.manager.SettingsManager.get_account_by_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns <code class="xref py py-class docutils literal notranslate"><span class="pre">Account</span></code> for a given email address (str)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – address to look up. A realname part will be ignored.</li>
+<li><strong>return_default</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If True and no address can be found, then
+the default account wil be returned</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><code class="xref py py-class docutils literal notranslate"><span class="pre">Account</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#alot.settings.errors.NoMatchingAccount" title="alot.settings.errors.NoMatchingAccount"><strong>NoMatchingAccount</strong></a> – If no account can be
+found. This includes if return_default is True and there are no
+accounts defined.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.settings.manager.SettingsManager.get_accounts">
+<code class="descname">get_accounts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.manager.SettingsManager.get_accounts" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns known accounts</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of <code class="xref py py-class docutils literal notranslate"><span class="pre">Account</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.settings.manager.SettingsManager.get_addressbooks">
+<code class="descname">get_addressbooks</code><span class="sig-paren">(</span><em>order=None</em>, <em>append_remaining=True</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.manager.SettingsManager.get_addressbooks" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns list of all defined <code class="xref py py-class docutils literal notranslate"><span class="pre">AddressBook</span></code> objects</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.settings.manager.SettingsManager.get_addresses">
+<code class="descname">get_addresses</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.manager.SettingsManager.get_addresses" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns addresses of known accounts including all their aliases</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.settings.manager.SettingsManager.get_hook">
+<code class="descname">get_hook</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.manager.SettingsManager.get_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>return hook (<cite>callable</cite>) identified by <cite>key</cite></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.settings.manager.SettingsManager.get_keybinding">
+<code class="descname">get_keybinding</code><span class="sig-paren">(</span><em>mode</em>, <em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.manager.SettingsManager.get_keybinding" title="Permalink to this definition">¶</a></dt>
+<dd><p>look up keybinding from <cite>MODE-maps</cite> sections</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – mode identifier</li>
+<li><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – urwid-style key identifier</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a command line to be applied upon keypress</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.settings.manager.SettingsManager.get_keybindings">
+<code class="descname">get_keybindings</code><span class="sig-paren">(</span><em>mode</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.manager.SettingsManager.get_keybindings" title="Permalink to this definition">¶</a></dt>
+<dd><p>look up keybindings from <cite>MODE-maps</cite> sections</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – mode identifier</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dictionaries of key-cmd for global and specific mode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">2-tuple of dicts</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.settings.manager.SettingsManager.get_main_addresses">
+<code class="descname">get_main_addresses</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.manager.SettingsManager.get_main_addresses" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns addresses of known accounts without its aliases</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.settings.manager.SettingsManager.get_notmuch_setting">
+<code class="descname">get_notmuch_setting</code><span class="sig-paren">(</span><em>section</em>, <em>key</em>, <em>fallback=None</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.manager.SettingsManager.get_notmuch_setting" title="Permalink to this definition">¶</a></dt>
+<dd><p>look up config values from notmuch’s config</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>section</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – key is in</li>
+<li><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – key to look up</li>
+<li><strong>fallback</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – fallback returned if key is not present</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">config value with type as specified in the spec-file</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.settings.manager.SettingsManager.get_tagstring_representation">
+<code class="descname">get_tagstring_representation</code><span class="sig-paren">(</span><em>tag</em>, <em>onebelow_normal=None</em>, <em>onebelow_focus=None</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.manager.SettingsManager.get_tagstring_representation" title="Permalink to this definition">¶</a></dt>
+<dd><p>looks up user’s preferred way to represent a given tagstring.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – tagstring</li>
+<li><strong>onebelow_normal</strong> (<a class="reference external" href="https://urwid.readthedocs.io/en/latest/reference/attrspec.html#urwid.AttrSpec" title="(in Urwid v1.3)"><em>urwid.AttrSpec</em></a>) – attribute that shines through if unfocussed</li>
+<li><strong>onebelow_focus</strong> (<a class="reference external" href="https://urwid.readthedocs.io/en/latest/reference/attrspec.html#urwid.AttrSpec" title="(in Urwid v1.3)"><em>urwid.AttrSpec</em></a>) – attribute that shines through if focussed</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If <cite>onebelow_normal</cite> or <cite>onebelow_focus</cite> is given these attributes will
+be used as fallbacks for fg/bg values ‘’ and ‘default’.</p>
+<dl class="docutils">
+<dt>This returns a dictionary mapping</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">normal:</th><td class="field-body">to <a class="reference external" href="https://urwid.readthedocs.io/en/latest/reference/attrspec.html#urwid.AttrSpec" title="(in Urwid v1.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">urwid.AttrSpec</span></code></a> used if unfocussed</td>
+</tr>
+<tr class="field-even field"><th class="field-name">focussed:</th><td class="field-body">to <a class="reference external" href="https://urwid.readthedocs.io/en/latest/reference/attrspec.html#urwid.AttrSpec" title="(in Urwid v1.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">urwid.AttrSpec</span></code></a> used if focussed</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">translated:</th><td class="field-body">to an alternative string representation</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.settings.manager.SettingsManager.get_theming_attribute">
+<code class="descname">get_theming_attribute</code><span class="sig-paren">(</span><em>mode</em>, <em>name</em>, <em>part=None</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.manager.SettingsManager.get_theming_attribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>looks up theming attribute</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – ui-mode (e.g. <cite>search</cite>,`thread`…)</li>
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – identifier of the atttribute</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://urwid.readthedocs.io/en/latest/reference/attrspec.html#urwid.AttrSpec" title="(in Urwid v1.3)">urwid.AttrSpec</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.settings.manager.SettingsManager.get_threadline_theming">
+<code class="descname">get_threadline_theming</code><span class="sig-paren">(</span><em>thread</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.manager.SettingsManager.get_threadline_theming" title="Permalink to this definition">¶</a></dt>
+<dd><p>looks up theming info a threadline displaying a given thread. This
+wraps around <a class="reference internal" href="#alot.settings.theme.Theme.get_threadline_theming" title="alot.settings.theme.Theme.get_threadline_theming"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_threadline_theming()</span></code></a>,
+filling in the current colour mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thread</strong> (<em>alot.db.thread.Thread</em>) – thread to theme</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.settings.manager.SettingsManager.mailcap_find_match">
+<code class="descname">mailcap_find_match</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.manager.SettingsManager.mailcap_find_match" title="Permalink to this definition">¶</a></dt>
+<dd><p>Propagates <code class="xref py py-func docutils literal notranslate"><span class="pre">mailcap.find_match()</span></code> but caches the mailcap (first
+argument)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.settings.manager.SettingsManager.read_config">
+<code class="descname">read_config</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.manager.SettingsManager.read_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>parse alot’s config file
+:param path: path to alot’s config file
+:type path: str</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.settings.manager.SettingsManager.read_notmuch_config">
+<code class="descname">read_notmuch_config</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.manager.SettingsManager.read_notmuch_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>parse notmuch’s config file
+:param path: path to notmuch’s config file
+:type path: str</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.settings.manager.SettingsManager.reload">
+<code class="descname">reload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.manager.SettingsManager.reload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reload notmuch and alot config files</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.settings.manager.SettingsManager.represent_datetime">
+<code class="descname">represent_datetime</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.manager.SettingsManager.represent_datetime" title="Permalink to this definition">¶</a></dt>
+<dd><p>turns a given datetime obj into a string representation.
+This will:</p>
+<ol class="arabic simple">
+<li>look if a fixed ‘timestamp_format’ is given in the config</li>
+<li>check if a ‘timestamp_format’ hook is defined</li>
+<li>use <a class="reference internal" href="utils.html#alot.helper.pretty_datetime" title="alot.helper.pretty_datetime"><code class="xref py py-func docutils literal notranslate"><span class="pre">pretty_datetime()</span></code></a> as fallback</li>
+</ol>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.settings.manager.SettingsManager.set">
+<code class="descname">set</code><span class="sig-paren">(</span><em>key</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.manager.SettingsManager.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>setter for global config values</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – config option identifies</li>
+<li><strong>value</strong> (depends on the specfile <code class="file docutils literal notranslate"><span class="pre">alot.rc.spec</span></code>) – option to set</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-alot.settings.errors">
+<span id="errors"></span><h2>4.4.2. Errors<a class="headerlink" href="#module-alot.settings.errors" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="alot.settings.errors.ConfigError">
+<em class="property">exception </em><code class="descclassname">alot.settings.errors.</code><code class="descname">ConfigError</code><a class="headerlink" href="#alot.settings.errors.ConfigError" title="Permalink to this definition">¶</a></dt>
+<dd><p>could not parse user config</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="alot.settings.errors.NoMatchingAccount">
+<em class="property">exception </em><code class="descclassname">alot.settings.errors.</code><code class="descname">NoMatchingAccount</code><a class="headerlink" href="#alot.settings.errors.NoMatchingAccount" title="Permalink to this definition">¶</a></dt>
+<dd><p>No account matching requirements found.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-alot.settings.utils">
+<span id="utils"></span><h2>4.4.3. Utils<a class="headerlink" href="#module-alot.settings.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="alot.settings.utils.read_config">
+<code class="descclassname">alot.settings.utils.</code><code class="descname">read_config</code><span class="sig-paren">(</span><em>configpath=None</em>, <em>specpath=None</em>, <em>checks=None</em>, <em>report_extra=False</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.utils.read_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>get a (validated) config object for given config file path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>configpath</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>)</em>) – path to config-file or a list of lines as its content</li>
+<li><strong>specpath</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – path to spec-file</li>
+<li><strong>checks</strong> (<em>dict str-&gt;callable</em><em>,</em>) – custom checks to use for validator.
+see <a class="reference external" href="http://www.voidspace.org.uk/python/validate.html">validate docs</a></li>
+<li><strong>report_extra</strong> (<em>boolean</em>) – log if a setting is not present in the spec file</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><a class="reference internal" href="#alot.settings.errors.ConfigError" title="alot.settings.errors.ConfigError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigError</span></code></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><cite>configobj.ConfigObj</cite></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="alot.settings.utils.resolve_att">
+<code class="descclassname">alot.settings.utils.</code><code class="descname">resolve_att</code><span class="sig-paren">(</span><em>a</em>, <em>fallback</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.utils.resolve_att" title="Permalink to this definition">¶</a></dt>
+<dd><p>replace ‘’ and ‘default’ by fallback values</p>
+</dd></dl>
+
+</div>
+<div class="section" id="themes">
+<h2>4.4.4. Themes<a class="headerlink" href="#themes" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="alot.settings.theme.Theme">
+<em class="property">class </em><code class="descclassname">alot.settings.theme.</code><code class="descname">Theme</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.theme.Theme" title="Permalink to this definition">¶</a></dt>
+<dd><p>Colour theme</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – path to theme file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#alot.settings.errors.ConfigError" title="alot.settings.errors.ConfigError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigError</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="alot.settings.theme.Theme.get_attribute">
+<code class="descname">get_attribute</code><span class="sig-paren">(</span><em>colourmode</em>, <em>mode</em>, <em>name</em>, <em>part=None</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.theme.Theme.get_attribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns requested attribute</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – ui-mode (e.g. <cite>search</cite>,`thread`…)</li>
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – of the atttribute</li>
+<li><strong>colourmode</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – colour mode; in [1, 16, 256]</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://urwid.readthedocs.io/en/latest/reference/attrspec.html#urwid.AttrSpec" title="(in Urwid v1.3)">urwid.AttrSpec</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.settings.theme.Theme.get_threadline_theming">
+<code class="descname">get_threadline_theming</code><span class="sig-paren">(</span><em>thread</em>, <em>colourmode</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.settings.theme.Theme.get_threadline_theming" title="Permalink to this definition">¶</a></dt>
+<dd><p>look up how to display a Threadline wiidget in search mode
+for a given thread.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>thread</strong> (<em>alot.db.thread.Thread</em>) – Thread to theme Threadline for</li>
+<li><strong>colourmode</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – colourmode to use, one of 1,16,256.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>This will return a dict mapping</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">normal:</th><td class="field-body">to <cite>urwid.AttrSpec</cite>,</td>
+</tr>
+<tr class="field-even field"><th class="field-name">focus:</th><td class="field-body">to <cite>urwid.AttrSpec</cite>,</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">parts:</th><td class="field-body">to a list of strings indentifying subwidgets
+to be displayed in this order.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt>Moreover, for every part listed this will map ‘part’ to a dict mapping</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">normal:</th><td class="field-body">to <cite>urwid.AttrSpec</cite>,</td>
+</tr>
+<tr class="field-even field"><th class="field-name">focus:</th><td class="field-body">to <cite>urwid.AttrSpec</cite>,</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">width:</th><td class="field-body">to a tuple indicating the width of the subpart.
+This is either <cite>(‘fit’, min, max)</cite> to force the widget
+to be at least <cite>min</cite> and at most <cite>max</cite> characters wide,
+or <cite>(‘weight’, n)</cite> which makes it share remaining space
+with other ‘weight’ parts.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">alignment:</th><td class="field-body">where to place the content if shorter than the widget.
+This is either ‘right’, ‘left’ or ‘center’.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-alot.account">
+<span id="accounts"></span><h2>4.4.5. Accounts<a class="headerlink" href="#module-alot.account" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="alot.account.Address">
+<em class="property">class </em><code class="descclassname">alot.account.</code><code class="descname">Address</code><span class="sig-paren">(</span><em>user</em>, <em>domain</em>, <em>case_sensitive=False</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.account.Address" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class that represents an email address.</p>
+<p>This class implements a number of RFC requirements (as explained in detail
+below) specifically in the comparison of email addresses to each other.</p>
+<p>This class abstracts the requirements of RFC 5321 § 2.4 on the user name
+portion of the email:</p>
+<blockquote>
+<div>local-part of a mailbox MUST BE treated as case sensitive. Therefore,
+SMTP implementations MUST take care to preserve the case of mailbox
+local-parts. In particular, for some hosts, the user “smith” is
+different from the user “Smith”.  However, exploiting the case
+sensitivity of mailbox local-parts impedes interoperability and is
+discouraged. Mailbox domains follow normal DNS rules and are hence not
+case sensitive.</div></blockquote>
+<p>This is complicated by § 2.3.11 of the same RFC:</p>
+<blockquote>
+<div>The standard mailbox naming convention is defined to be
+“<a class="reference external" href="mailto:local-part&#37;&#52;&#48;domain">local-part<span>&#64;</span>domain</a>”; contemporary usage permits a much broader set of
+applications than simple “user names”. Consequently, and due to a long
+history of problems when intermediate hosts have attempted to optimize
+transport by modifying them, the local-part MUST be interpreted and
+assigned semantics only by the host specified in the domain part of the
+address.</div></blockquote>
+<p>And also the restrictions that RFC 1035 § 3.1 places on the domain name:</p>
+<blockquote>
+<div>Name servers and resolvers must compare [domains] in a case-insensitive
+manner</div></blockquote>
+<p>Because of RFC 6531 § 3.2, we take special care to ensure that unicode
+names will work correctly:</p>
+<blockquote>
+<div>An SMTP server that announces the SMTPUTF8 extension MUST be prepared
+to accept a UTF-8 string [RFC3629] in any position in which RFC 5321
+specifies that a &lt;mailbox&gt; can appear.  Although the characters in the
+&lt;local-part&gt; are permitted to contain non-ASCII characters, the actual
+parsing of the &lt;local-part&gt; and the delimiters used are unchanged from
+the base email specification [RFC5321]</div></blockquote>
+<p>What this means is that the username can be either case-insensitive or not,
+but only the receiving SMTP server can know what it’s own rules are. The
+consensus is that the vast majority (all?) of the SMTP servers in modern
+usage treat user names as case-insensitve. Therefore we also, by default,
+treat the user name as case insenstive.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The “user name” portion of the address.</li>
+<li><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The domain name portion of the address.</li>
+<li><strong>case_sensitive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If False (the default) the user name portion of
+the address will be compared to the other user name portion without
+regard to case. If True then it will.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="classmethod">
+<dt id="alot.account.Address.from_string">
+<em class="property">classmethod </em><code class="descname">from_string</code><span class="sig-paren">(</span><em>address</em>, <em>case_sensitive=False</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.account.Address.from_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alternate constructor for building from a string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – An email address in &lt;user&gt;&#64;&lt;domain&gt; form</li>
+<li><strong>case_sensitive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – passed directly to the constructor argument
+of the same name.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An account from the given arguments</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#alot.account.Account" title="alot.account.Account"><code class="xref py py-class docutils literal notranslate"><span class="pre">Account</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="alot.account.Account">
+<em class="property">class </em><code class="descclassname">alot.account.</code><code class="descname">Account</code><span class="sig-paren">(</span><em>address=None</em>, <em>aliases=None</em>, <em>alias_regexp=None</em>, <em>realname=None</em>, <em>gpg_key=None</em>, <em>signature=None</em>, <em>signature_filename=None</em>, <em>signature_as_attachment=False</em>, <em>sent_box=None</em>, <em>sent_tags=None</em>, <em>draft_box=None</em>, <em>draft_tags=None</em>, <em>replied_tags=None</em>, <em>passed_tags=None</em>, <em>abook=None</em>, <em>sign_by_default=False</em>, <em>encrypt_by_default='none'</em>, <em>encrypt_to_self=None</em>, <em>case_sensitive_username=False</em>, <em>**_</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.account.Account" title="Permalink to this definition">¶</a></dt>
+<dd><p>Datastructure that represents an email account. It manages this account’s
+settings, can send and store mails to maildirs (drafts/send).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is an abstract class that leaves <a class="reference internal" href="#alot.account.Account.send_mail" title="alot.account.Account.send_mail"><code class="xref py py-meth docutils literal notranslate"><span class="pre">send_mail()</span></code></a> unspecified.
+See <a class="reference internal" href="#alot.account.SendmailAccount" title="alot.account.SendmailAccount"><code class="xref py py-class docutils literal notranslate"><span class="pre">SendmailAccount</span></code></a> for a subclass that uses a sendmail
+command to send out mails.</p>
+</div>
+<dl class="method">
+<dt id="alot.account.Account.get_addresses">
+<code class="descname">get_addresses</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#alot.account.Account.get_addresses" title="Permalink to this definition">¶</a></dt>
+<dd><p>return all email addresses connected to this account, in order of
+their importance</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.account.Account.send_mail">
+<code class="descname">send_mail</code><span class="sig-paren">(</span><em>mail</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.account.Account.send_mail" title="Permalink to this definition">¶</a></dt>
+<dd><p>sends given mail</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mail</strong> (<a class="reference external" href="https://docs.python.org/3/library/email.compat32-message.html#email.message.Message" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">email.message.Message</span></code></a> or string) – the mail to send</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><strong>SendingMailFailed</strong> – if sending fails</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.account.Account.store_draft_mail">
+<code class="descname">store_draft_mail</code><span class="sig-paren">(</span><em>mail</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.account.Account.store_draft_mail" title="Permalink to this definition">¶</a></dt>
+<dd><p>stores mail (<a class="reference external" href="https://docs.python.org/3/library/email.compat32-message.html#email.message.Message" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">email.message.Message</span></code></a> or str) as draft if
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">draft_box</span></code> is set.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="alot.account.Account.store_mail">
+<em class="property">static </em><code class="descname">store_mail</code><span class="sig-paren">(</span><em>mbx</em>, <em>mail</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.account.Account.store_mail" title="Permalink to this definition">¶</a></dt>
+<dd><p>stores given mail in mailbox. If mailbox is maildir, set the S-flag and
+return path to newly added mail. Oherwise this will return <cite>None</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mbx</strong> (<a class="reference external" href="https://docs.python.org/3/library/mailbox.html#mailbox.Mailbox" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mailbox.Mailbox</span></code></a>) – mailbox to use</li>
+<li><strong>mail</strong> (<a class="reference external" href="https://docs.python.org/3/library/email.compat32-message.html#email.message.Message" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">email.message.Message</span></code></a> or str) – the mail to store</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">absolute path of mail-file for Maildir or None if mail was
+successfully stored</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)">None</a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">StoreMailError</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.account.Account.store_sent_mail">
+<code class="descname">store_sent_mail</code><span class="sig-paren">(</span><em>mail</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.account.Account.store_sent_mail" title="Permalink to this definition">¶</a></dt>
+<dd><p>stores mail (<a class="reference external" href="https://docs.python.org/3/library/email.compat32-message.html#email.message.Message" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">email.message.Message</span></code></a> or str) in send-store if
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">sent_box</span></code> is set.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alot.account.Account.abook">
+<code class="descname">abook</code><em class="property"> = None</em><a class="headerlink" href="#alot.account.Account.abook" title="Permalink to this definition">¶</a></dt>
+<dd><p>addressbook (<code class="xref py py-class docutils literal notranslate"><span class="pre">addressbook.AddressBook</span></code>)
+managing this accounts contacts</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alot.account.Account.address">
+<code class="descname">address</code><em class="property"> = None</em><a class="headerlink" href="#alot.account.Account.address" title="Permalink to this definition">¶</a></dt>
+<dd><p>this accounts main email address</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alot.account.Account.alias_regexp">
+<code class="descname">alias_regexp</code><em class="property"> = []</em><a class="headerlink" href="#alot.account.Account.alias_regexp" title="Permalink to this definition">¶</a></dt>
+<dd><p>regex matching alternative addresses</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alot.account.Account.aliases">
+<code class="descname">aliases</code><em class="property"> = []</em><a class="headerlink" href="#alot.account.Account.aliases" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of alternative addresses</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alot.account.Account.encrypt_to_self">
+<code class="descname">encrypt_to_self</code><em class="property"> = None</em><a class="headerlink" href="#alot.account.Account.encrypt_to_self" title="Permalink to this definition">¶</a></dt>
+<dd><p>encrypt outgoing encrypted emails to this account’s private key</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alot.account.Account.gpg_key">
+<code class="descname">gpg_key</code><em class="property"> = None</em><a class="headerlink" href="#alot.account.Account.gpg_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>gpg fingerprint for this account’s private key</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alot.account.Account.realname">
+<code class="descname">realname</code><em class="property"> = None</em><a class="headerlink" href="#alot.account.Account.realname" title="Permalink to this definition">¶</a></dt>
+<dd><p>real name used to format from-headers</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alot.account.Account.signature">
+<code class="descname">signature</code><em class="property"> = None</em><a class="headerlink" href="#alot.account.Account.signature" title="Permalink to this definition">¶</a></dt>
+<dd><p>signature to append to outgoing mails</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alot.account.Account.signature_as_attachment">
+<code class="descname">signature_as_attachment</code><em class="property"> = None</em><a class="headerlink" href="#alot.account.Account.signature_as_attachment" title="Permalink to this definition">¶</a></dt>
+<dd><p>attach signature file instead of appending its content to body text</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alot.account.Account.signature_filename">
+<code class="descname">signature_filename</code><em class="property"> = None</em><a class="headerlink" href="#alot.account.Account.signature_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>filename of signature file in attachment</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="alot.account.SendmailAccount">
+<em class="property">class </em><code class="descclassname">alot.account.</code><code class="descname">SendmailAccount</code><span class="sig-paren">(</span><em>cmd</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.account.SendmailAccount" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#alot.account.Account" title="alot.account.Account"><code class="xref py py-class docutils literal notranslate"><span class="pre">Account</span></code></a> that pipes a message to a <cite>sendmail</cite> shell command for
+sending</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cmd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – sendmail command to use for this account</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="alot.account.SendmailAccount.send_mail">
+<code class="descname">send_mail</code><span class="sig-paren">(</span><em>mail</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.account.SendmailAccount.send_mail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pipe the given mail to the configured sendmail command.  Display a
+short message on success or a notification on error.
+:param mail: the mail to send out
+:type mail: <a class="reference external" href="https://docs.python.org/3/library/email.compat32-message.html#email.message.Message" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">email.message.Message</span></code></a> or string
+:raises: class:<cite>SendingMailFailed</cite> if sending failes</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-alot.addressbook">
+<span id="addressbooks"></span><h2>4.4.6. Addressbooks<a class="headerlink" href="#module-alot.addressbook" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="alot.addressbook.AddressBook">
+<em class="property">class </em><code class="descclassname">alot.addressbook.</code><code class="descname">AddressBook</code><span class="sig-paren">(</span><em>ignorecase=True</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.addressbook.AddressBook" title="Permalink to this definition">¶</a></dt>
+<dd><p>can look up email addresses and realnames for contacts.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is an abstract class that leaves <a class="reference internal" href="#alot.addressbook.AddressBook.get_contacts" title="alot.addressbook.AddressBook.get_contacts"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_contacts()</span></code></a>
+unspecified. See <code class="xref py py-class docutils literal notranslate"><span class="pre">AbookAddressBook</span></code> and
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ExternalAddressbook</span></code> for implementations.</p>
+</div>
+<dl class="method">
+<dt id="alot.addressbook.AddressBook.get_contacts">
+<code class="descname">get_contacts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#alot.addressbook.AddressBook.get_contacts" title="Permalink to this definition">¶</a></dt>
+<dd><p>list all contacts tuples in this abook as (name, email) tuples</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="alot.addressbook.AddressBook.lookup">
+<code class="descname">lookup</code><span class="sig-paren">(</span><em>query=''</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.addressbook.AddressBook.lookup" title="Permalink to this definition">¶</a></dt>
+<dd><p>looks up all contacts where name or address match query</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-alot.addressbook.abook"></span><dl class="class">
+<dt id="alot.addressbook.abook.AbookAddressBook">
+<em class="property">class </em><code class="descclassname">alot.addressbook.abook.</code><code class="descname">AbookAddressBook</code><span class="sig-paren">(</span><em>path='~/.abook/addressbook'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.addressbook.abook.AbookAddressBook" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">AddressBook</span></code> that parses abook’s config/database files</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – path to abook addressbook file</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="alot.addressbook.abook.AbookAddressBook.get_contacts">
+<code class="descname">get_contacts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#alot.addressbook.abook.AbookAddressBook.get_contacts" title="Permalink to this definition">¶</a></dt>
+<dd><p>list all contacts tuples in this abook as (name, email) tuples</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-alot.addressbook.external"></span><dl class="class">
+<dt id="alot.addressbook.external.ExternalAddressbook">
+<em class="property">class </em><code class="descclassname">alot.addressbook.external.</code><code class="descname">ExternalAddressbook</code><span class="sig-paren">(</span><em>commandline</em>, <em>regex</em>, <em>reflags=0</em>, <em>external_filtering=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#alot.addressbook.external.ExternalAddressbook" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">AddressBook</span></code> that parses a shell command’s output</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>commandline</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – commandline</li>
+<li><strong>regex</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – regular expression used to match contacts in <cite>commands</cite>
+output to stdout. Must define subparts named “email” and
+“name”.</li>
+<li><strong>reflags</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – flags to use with regular expression.
+Use the constants defined in <a class="reference external" href="https://docs.python.org/3/library/re.html#module-re" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">re</span></code></a> here
+(<cite>re.IGNORECASE</cite> etc.)</li>
+<li><strong>external_filtering</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – if True the command is fired
+with the given search string as parameter
+and the result is not filtered further.
+If set to False, the command is fired without
+additional parameters and the result list is filtered
+according to the search string.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4.4. User Settings</a><ul>
+<li><a class="reference internal" href="#settings-manager">4.4.1. Settings Manager</a></li>
+<li><a class="reference internal" href="#module-alot.settings.errors">4.4.2. Errors</a></li>
+<li><a class="reference internal" href="#module-alot.settings.utils">4.4.3. Utils</a></li>
+<li><a class="reference internal" href="#themes">4.4.4. Themes</a></li>
+<li><a class="reference internal" href="#module-alot.account">4.4.5. Accounts</a></li>
+<li><a class="reference internal" href="#module-alot.addressbook">4.4.6. Addressbooks</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="interface.html"
+                        title="previous chapter">4.3. User Interface</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="utils.html"
+                        title="next chapter">4.5. Utils</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/settings.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="utils.html" title="4.5. Utils"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="interface.html" title="4.3. User Interface"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Alot User Manual</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >4. API and Development</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2014, Patrick Totzke.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+    </div>
+  </body>
+</html>

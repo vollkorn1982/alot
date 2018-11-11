@@ -1,0 +1,441 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>2.4.7. Commands in thread mode &#8212; Alot User Manual</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="../first_steps.html" />
+    <link rel="prev" title="2.4.6. Commands in taglist mode" href="taglist.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../first_steps.html" title="&lt;no title&gt;"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="taglist.html" title="2.4.6. Commands in taglist mode"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Alot User Manual</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">2. Usage</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="commands-in-thread-mode">
+<h1>2.4.7. Commands in <cite>thread</cite> mode<a class="headerlink" href="#commands-in-thread-mode" title="Permalink to this headline">¶</a></h1>
+<p>The following commands are available in thread mode:</p>
+<span class="target" id="cmd-thread-bounce"></span><dl class="describe">
+<dt>
+<code class="descname">bounce</code></dt>
+<dd><p>directly re-send selected message</p>
+</dd></dl>
+
+<span class="target" id="cmd-thread-editnew"></span><dl class="describe">
+<dt>
+<code class="descname">editnew</code></dt>
+<dd><p>edit message in as new</p>
+<dl class="docutils">
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—spawn:</th><td class="field-body">open editor in new window</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-thread-fold"></span><dl class="describe">
+<dt>
+<code class="descname">fold</code></dt>
+<dd><p>fold message(s)</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>query used to filter messages to affect</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-thread-forward"></span><dl class="describe">
+<dt>
+<code class="descname">forward</code></dt>
+<dd><p>forward message</p>
+<dl class="docutils">
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—attach:</th><td class="field-body">attach original mail</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—spawn:</th><td class="field-body">open editor in new window</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-thread-indent"></span><dl class="describe">
+<dt>
+<code class="descname">indent</code></dt>
+<dd><p>change message/reply indentation</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>None</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-thread-move"></span><dl class="describe">
+<dt>
+<code class="descname">move</code></dt>
+<dd><p>move focus in current buffer</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>up, down, [half]page up, [half]page down, first, last,                   parent, first reply, last reply,                   next sibling, previous sibling, next, previous,                   next unfolded, previous unfolded,                   next NOTMUCH_QUERY, previous NOTMUCH_QUERY</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-thread-pipeto"></span><dl class="describe">
+<dt>
+<code class="descname">pipeto</code></dt>
+<dd><p>pipe message(s) to stdin of a shellcommand</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>shellcommand to pipe to</dd>
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—all:</th><td class="field-body">pass all messages</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—format:</th><td class="field-body">output format; valid choices are: `raw`,`decoded`,`id`,`filepath` (defaults to: ‘raw’)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">—separately:</th><td class="field-body">call command once for each message</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—background:</th><td class="field-body">don’t stop the interface</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">—add_tags:</th><td class="field-body">add ‘Tags’ header to the message</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—shell:</th><td class="field-body">let the shell interpret the command</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">—notify_stdout:</th><td class="field-body">display cmd’s stdout as notification</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—field_key:</th><td class="field-body">mailcap field key for decoding (defaults to: ‘copiousoutput’)</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-thread-print"></span><dl class="describe">
+<dt>
+<code class="descname">print</code></dt>
+<dd><p>print message(s)</p>
+<dl class="docutils">
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—all:</th><td class="field-body">print all messages</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—raw:</th><td class="field-body">pass raw mail string</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">—separately:</th><td class="field-body">call print command once for each message</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—add_tags:</th><td class="field-body">add ‘Tags’ header to the message</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-thread-remove"></span><dl class="describe">
+<dt>
+<code class="descname">remove</code></dt>
+<dd><p>remove message(s) from the index</p>
+<dl class="docutils">
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—all:</th><td class="field-body">remove whole thread</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-thread-reply"></span><dl class="describe">
+<dt>
+<code class="descname">reply</code></dt>
+<dd><p>reply to message</p>
+<dl class="docutils">
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—all:</th><td class="field-body">reply to all</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—list:</th><td class="field-body">reply to list</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">—spawn:</th><td class="field-body">open editor in new window</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-thread-retag"></span><dl class="describe">
+<dt>
+<code class="descname">retag</code></dt>
+<dd><p>set message(s) tags.</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>comma separated list of tags</dd>
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—all:</th><td class="field-body">tag all messages in thread</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—no-flush:</th><td class="field-body">postpone a writeout to the index (defaults to: ‘True’)</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-thread-retagprompt"></span><dl class="describe">
+<dt>
+<code class="descname">retagprompt</code></dt>
+<dd><p>prompt to retag selected thread’s or message’s tags</p>
+</dd></dl>
+
+<span class="target" id="cmd-thread-save"></span><dl class="describe">
+<dt>
+<code class="descname">save</code></dt>
+<dd><p>save attachment(s)</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>path to save to</dd>
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—all:</th><td class="field-body">save all attachments</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-thread-select"></span><dl class="describe">
+<dt>
+<code class="descname">select</code></dt>
+<dd><dl class="docutils">
+<dt>select focussed element:</dt>
+<dd><ul class="first last simple">
+<li>if it is a message summary, toggle visibility of the message;</li>
+<li>if it is an attachment line, open the attachment</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-thread-tag"></span><dl class="describe">
+<dt>
+<code class="descname">tag</code></dt>
+<dd><p>add tags to message(s)</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>comma separated list of tags</dd>
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—all:</th><td class="field-body">tag all messages in thread</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—no-flush:</th><td class="field-body">postpone a writeout to the index (defaults to: ‘True’)</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-thread-toggleheaders"></span><dl class="describe">
+<dt>
+<code class="descname">toggleheaders</code></dt>
+<dd><p>display all headers</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>query used to filter messages to affect</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-thread-togglesource"></span><dl class="describe">
+<dt>
+<code class="descname">togglesource</code></dt>
+<dd><p>display message source</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>query used to filter messages to affect</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-thread-toggletags"></span><dl class="describe">
+<dt>
+<code class="descname">toggletags</code></dt>
+<dd><p>flip presence of tags on message(s)</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>comma separated list of tags</dd>
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—all:</th><td class="field-body">tag all messages in thread</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—no-flush:</th><td class="field-body">postpone a writeout to the index (defaults to: ‘True’)</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-thread-unfold"></span><dl class="describe">
+<dt>
+<code class="descname">unfold</code></dt>
+<dd><p>unfold message(s)</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>query used to filter messages to affect</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="cmd-thread-untag"></span><dl class="describe">
+<dt>
+<code class="descname">untag</code></dt>
+<dd><p>remove tags from message(s)</p>
+<dl class="docutils">
+<dt>argument</dt>
+<dd>comma separated list of tags</dd>
+<dt>optional arguments</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">—all:</th><td class="field-body">tag all messages in thread</td>
+</tr>
+<tr class="field-even field"><th class="field-name">—no-flush:</th><td class="field-body">postpone a writeout to the index (defaults to: ‘True’)</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="taglist.html"
+                        title="previous chapter">2.4.6. Commands in <cite>taglist</cite> mode</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../first_steps.html"
+                        title="next chapter">&lt;no title&gt;</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/usage/modes/thread.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../first_steps.html" title="&lt;no title&gt;"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="taglist.html" title="2.4.6. Commands in taglist mode"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Alot User Manual</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >2. Usage</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2014, Patrick Totzke.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,322 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>3.6. Theming &#8212; Alot User Manual</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4. API and Development" href="../api/index.html" />
+    <link rel="prev" title="3.5. Hooks" href="hooks.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../api/index.html" title="4. API and Development"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="hooks.html" title="3.5. Hooks"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Alot User Manual</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">3. Configuration</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="theming">
+<span id="config-theming"></span><h1>3.6. Theming<a class="headerlink" href="#theming" title="Permalink to this headline">¶</a></h1>
+<p>Alot can be run in 1, 16 or 256 colour mode. The requested mode is determined by the command-line parameter <cite>-C</cite> or read
+from option <cite>colourmode</cite> config value. The default is 256, which scales down depending on how many colours your
+terminal supports.</p>
+<p>Most parts of the user interface can be individually coloured to your liking.
+To make it easier to switch between or share different such themes, they are defined in separate
+files (see below for the exact format).
+To specify the theme to use, set the <a class="reference internal" href="config_options.html#theme"><span class="std std-ref">theme</span></a> config option to the name of a theme-file.
+A file by that name will be looked up in the path given by the <a class="reference internal" href="config_options.html#themes-dir"><span class="std std-ref">themes_dir</span></a> config setting
+which defaults to $XDG_CONFIG_HOME/alot/themes, and <code class="file docutils literal notranslate"><span class="pre">~/.config/alot/themes/</span></code>,
+if XDG_CONFIG_HOME is empty or not set. If the themes_dir is not
+present then the contents of $XDG_DATA_DIRS/alot/themes will be tried in order.
+This defaults to <code class="file docutils literal notranslate"><span class="pre">/usr/local/share/alot/themes</span></code> and <code class="file docutils literal notranslate"><span class="pre">/usr/share/alot/themes</span></code>, in that order.
+These locations are meant to be used by distro packages to put themes in.</p>
+<div class="section" id="theme-files">
+<span id="config-theming-themefiles"></span><h2>3.6.1. Theme Files<a class="headerlink" href="#theme-files" title="Permalink to this headline">¶</a></h2>
+<p>contain a section for each <a class="reference internal" href="key_bindings.html#modes"><span class="std std-ref">MODE</span></a> plus “help” for the bindings-help overlay
+and “global” for globally used themables like footer, prompt etc.
+Each such section defines colour <a class="reference internal" href="#config-theming-attributes"><span class="std std-ref">attributes</span></a> for the parts that
+can be themed.  The names of the themables should be self-explanatory.
+Have a look at the default theme file at <code class="file docutils literal notranslate"><span class="pre">alot/defaults/default.theme</span></code> and the config spec
+<code class="file docutils literal notranslate"><span class="pre">alot/defaults/default.theme</span></code> for the exact format.</p>
+</div>
+<div class="section" id="colour-attributes">
+<span id="config-theming-attributes"></span><h2>3.6.2. Colour Attributes<a class="headerlink" href="#colour-attributes" title="Permalink to this headline">¶</a></h2>
+<p>Attributes are <em>sextuples</em> of <a class="reference external" href="http://excess.org/urwid/wiki/DisplayAttributes">urwid Attribute strings</a>
+that specify foreground and background for mono, 16 and 256-colour modes respectively.
+For mono-mode only the flags <cite>blink</cite>, <cite>standup</cite>, <cite>underline</cite> and <cite>bold</cite> are available,
+16c mode supports these in combination with the colour names:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">brown</span>    <span class="n">dark</span> <span class="n">red</span>     <span class="n">dark</span> <span class="n">magenta</span>    <span class="n">dark</span> <span class="n">blue</span>    <span class="n">dark</span> <span class="n">cyan</span>    <span class="n">dark</span> <span class="n">green</span>
+<span class="n">yellow</span>   <span class="n">light</span> <span class="n">red</span>    <span class="n">light</span> <span class="n">magenta</span>   <span class="n">light</span> <span class="n">blue</span>   <span class="n">light</span> <span class="n">cyan</span>   <span class="n">light</span> <span class="n">green</span>
+<span class="n">black</span>    <span class="n">dark</span> <span class="n">gray</span>    <span class="n">light</span> <span class="n">gray</span>      <span class="n">white</span>
+</pre></div>
+</div>
+<p>In high-colour mode, you may use the above plus grayscales <cite>g0</cite> to <cite>g100</cite> and
+colour codes given as <cite>#</cite> followed by three hex values.
+See <a class="reference external" href="http://excess.org/urwid/wiki/DisplayAttributes">here</a>
+and <a class="reference external" href="http://excess.org/urwid/reference.html#AttrSpec">here</a>
+for more details on the interpreted values.  A colour picker that makes choosing colours easy can be
+found in <code class="file docutils literal notranslate"><span class="pre">alot/extra/colour_picker.py</span></code>.</p>
+<p>As an example, check the setting below that makes the footer line appear as
+underlined bold red text on a bright green background:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[[global]]</span>
+  <span class="c1">#name    mono fg     mono bg   16c fg                        16c bg         256c fg                 256c bg</span>
+  <span class="c1">#        |                 |   |                             |              |                             |</span>
+  <span class="c1">#        v                 v   v                             v              v                             v</span>
+  <span class="na">footer</span> <span class="o">=</span> <span class="s">&#39;bold,underline&#39;, &#39;&#39;, &#39;light red, bold, underline&#39;, &#39;light green&#39;, &#39;light red, bold, underline&#39;, &#39;#8f6&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="search-mode-thread-ines">
+<h2>3.6.3. Search mode thread ines<a class="headerlink" href="#search-mode-thread-ines" title="Permalink to this headline">¶</a></h2>
+<p>The subsection ‘[[threadline]]’ of the ‘[search]’ section in <a class="reference internal" href="#config-theming-themefiles"><span class="std std-ref">Theme Files</span></a>
+determines how to present a thread: here, <a class="reference internal" href="#config-theming-attributes"><span class="std std-ref">attributes</span></a> ‘normal’ and
+‘focus’ provide fallback/spacer themes and ‘parts’ is a (string) list of displayed subwidgets.
+Possible part strings are:</p>
+<ul class="simple">
+<li>authors</li>
+<li>content</li>
+<li>date</li>
+<li>mailcount</li>
+<li>subject</li>
+<li>tags</li>
+</ul>
+<p>For every listed part there must be a subsection with the same name, defining</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">normal:</th><td class="field-body"><a class="reference internal" href="#config-theming-attributes"><span class="std std-ref">attribute</span></a> used for this part if unfocussed</td>
+</tr>
+<tr class="field-even field"><th class="field-name">focus:</th><td class="field-body"><a class="reference internal" href="#config-theming-attributes"><span class="std std-ref">attribute</span></a> used for this part if focussed</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">width:</th><td class="field-body">tuple indicating the width of the part. This is either <cite>(‘fit’, min, max)</cite> to force the widget
+to be at least <cite>min</cite> and at most <cite>max</cite> characters wide,
+or <cite>(‘weight’, n)</cite> which makes it share remaining space
+with other ‘weight’ parts.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">alignment:</th><td class="field-body">how to place the content string if the widget space is larger.
+This must be one of ‘right’, ‘left’ or ‘center’.</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="dynamic-theming-of-thread-lines-based-on-query-matching">
+<h3>3.6.3.1. Dynamic theming of thread lines based on query matching<a class="headerlink" href="#dynamic-theming-of-thread-lines-based-on-query-matching" title="Permalink to this headline">¶</a></h3>
+<p>To highlight some thread lines (use different attributes than the defaults found in the
+‘[[threadline]]’ section), one can define sections with prefix ‘threadline’.
+Each one of those can redefine any part of the structure outlined above, the rest defaults to
+values defined in ‘[[threadline]]’.</p>
+<p>The section used to theme a particular thread is the first one (in file-order) that matches
+the criteria defined by its ‘query’ and ‘tagged_with’ values:</p>
+<ul class="simple">
+<li>If ‘query’ is defined, the thread must match that querystring.</li>
+<li>If ‘tagged_with’ is defined, is value (string list)  must be a subset of the accumulated tags of all messages in the thread.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>that ‘tagged_with = A,B’ is different from ‘query = “is:A AND is:B”’:
+the latter will match only if the thread contains a single message that is both tagged with
+A and B.</p>
+<p class="last">Moreover, note that if both query and tagged_with is undefined, this section will always match
+and thus overwrite the defaults.</p>
+</div>
+<p>The example below shows how to highlight unread threads:
+The date-part will be bold red if the thread has unread messages and flagged messages
+and just bold if the thread has unread but no flagged messages:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[search]</span>
+    <span class="c1"># default threadline</span>
+    <span class="k">[[threadline]]</span>
+        <span class="na">normal</span> <span class="o">=</span> <span class="s">&#39;default&#39;,&#39;default&#39;,&#39;default&#39;,&#39;default&#39;,&#39;#6d6&#39;,&#39;default&#39;</span>
+<span class="s">        focus = &#39;standout&#39;,&#39;default&#39;,&#39;light gray&#39;,&#39;dark gray&#39;,&#39;white&#39;,&#39;#68a&#39;</span>
+<span class="s">        parts = date,mailcount,tags,authors,subject</span>
+<span class="s">        [[[date]]]</span>
+<span class="s">            normal = &#39;default&#39;,&#39;default&#39;,&#39;light gray&#39;,&#39;default&#39;,&#39;g58&#39;,&#39;default&#39;</span>
+<span class="s">            focus = &#39;standout&#39;,&#39;default&#39;,&#39;light gray&#39;,&#39;dark gray&#39;,&#39;g89&#39;,&#39;#68a&#39;</span>
+<span class="s">            width = &#39;fit&#39;,10,10</span>
+<span class="s">        # ...</span>
+
+    <span class="c1"># highlight threads containing unread and flagged messages</span>
+    <span class="k">[[threadline-flagged-unread]]</span>
+        <span class="na">tagged_with</span> <span class="o">=</span> <span class="s">&#39;unread&#39;,&#39;flagged&#39;</span>
+<span class="s">        [[[date]]]</span>
+<span class="s">            normal = &#39;default&#39;,&#39;default&#39;,&#39;light red,bold&#39;,&#39;default&#39;,&#39;light red,bold&#39;,&#39;default&#39;</span>
+
+    <span class="c1"># highlight threads containing unread messages</span>
+    <span class="k">[[threadline-unread]]</span>
+        <span class="na">query</span> <span class="o">=</span> <span class="s">&#39;is:unread&#39;</span>
+<span class="s">        [[[date]]]</span>
+<span class="s">            normal = &#39;default&#39;,&#39;default&#39;,&#39;light gray,bold&#39;,&#39;default&#39;,&#39;g58,bold&#39;,&#39;default&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="tagstring-formatting">
+<span id="config-theming-tags"></span><h2>3.6.4. Tagstring Formatting<a class="headerlink" href="#tagstring-formatting" title="Permalink to this headline">¶</a></h2>
+<p>One can specify how a particular tagstring is displayed throughout the interface. To use this
+feature, add a section <cite>[tags]</cite> to you alot config (not the theme file)
+and for each tag you want to customize, add a subsection named after the tag.
+Such a subsection may define</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">normal:</th><td class="field-body"><a class="reference internal" href="#config-theming-attributes"><span class="std std-ref">attribute</span></a> used if unfocussed</td>
+</tr>
+<tr class="field-even field"><th class="field-name">focus:</th><td class="field-body"><a class="reference internal" href="#config-theming-attributes"><span class="std std-ref">attribute</span></a> used if focussed</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">translated:</th><td class="field-body">fixed string representation for this tag. The tag can be hidden from view,
+if the key <cite>translated</cite> is set to ‘’, the empty string.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">translation:</th><td class="field-body">a pair of strings that define a regular substitution to compute the string
+representation on the fly using <cite>re.sub</cite>. This only really makes sense if
+one uses a regular expression to match more than one tagstring (see below).</td>
+</tr>
+</tbody>
+</table>
+<p>The following will make alot display the “todo” tag as “TODO” in white on red.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[tags]</span>
+  <span class="k">[[todo]]</span>
+    <span class="na">normal</span> <span class="o">=</span> <span class="s">&#39;&#39;,&#39;&#39;, &#39;white&#39;,&#39;light red&#39;, &#39;white&#39;,&#39;#d66&#39;</span>
+<span class="s">    translated = TODO</span>
+</pre></div>
+</div>
+<p>Utf-8 symbols are welcome here, see e.g.
+<a class="reference external" href="http://panmental.de/symbols/info.htm">http://panmental.de/symbols/info.htm</a> for some fancy symbols. I personally display my maildir flags
+like this:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[tags]</span>
+
+  <span class="k">[[flagged]]</span>
+    <span class="na">translated</span> <span class="o">=</span> <span class="s">⚑</span>
+<span class="s">    normal = &#39;&#39;,&#39;&#39;,&#39;light red&#39;,&#39;&#39;,&#39;light red&#39;,&#39;&#39;</span>
+<span class="s">    focus = &#39;&#39;,&#39;&#39;,&#39;light red&#39;,&#39;&#39;,&#39;light red&#39;,&#39;&#39;</span>
+
+  <span class="k">[[unread]]</span>
+    <span class="na">translated</span> <span class="o">=</span> <span class="s">✉</span>
+
+  <span class="k">[[replied]]</span>
+    <span class="na">translated</span> <span class="o">=</span> <span class="s">⏎</span>
+
+  <span class="k">[[encrypted]]</span>
+    <span class="na">translated</span> <span class="o">=</span> <span class="s">⚷</span>
+</pre></div>
+</div>
+<p>You may use regular expressions in the tagstring subsections to theme multiple tagstrings at once (first match wins).
+If you do so, you can use the <cite>translation</cite> option to specify a string substitution that will
+rename a matching tagstring. <cite>translation</cite> takes a comma separated <em>pair</em> of strings that will be fed to
+<a class="reference external" href="https://docs.python.org/3/library/re.html#re.sub" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">re.sub()</span></code></a>. For instance, to theme all your <a class="reference external" href="http://notmuchmail.org/nmbug/">nmbug</a> tagstrings and especially colour tag <cite>notmuch::bug</cite> red,
+do the following:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[[notmuch::bug]]</span>
+  <span class="na">translated</span> <span class="o">=</span> <span class="s">&#39;nm:bug&#39;</span>
+<span class="s">  normal = &quot;&quot;, &quot;&quot;, &quot;light red, bold&quot;, &quot;light blue&quot;, &quot;light red, bold&quot;, &quot;#88d&quot;</span>
+
+<span class="k">[[notmuch::.*]]</span>
+  <span class="na">translation</span> <span class="o">=</span> <span class="s">&#39;notmuch::(.*)&#39;,&#39;nm:\1&#39;</span>
+<span class="s">  normal = &quot;&quot;, &quot;&quot;, &quot;white&quot;, &quot;light blue&quot;, &quot;#fff&quot;, &quot;#88d&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3.6. Theming</a><ul>
+<li><a class="reference internal" href="#theme-files">3.6.1. Theme Files</a></li>
+<li><a class="reference internal" href="#colour-attributes">3.6.2. Colour Attributes</a></li>
+<li><a class="reference internal" href="#search-mode-thread-ines">3.6.3. Search mode thread ines</a><ul>
+<li><a class="reference internal" href="#dynamic-theming-of-thread-lines-based-on-query-matching">3.6.3.1. Dynamic theming of thread lines based on query matching</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tagstring-formatting">3.6.4. Tagstring Formatting</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="hooks.html"
+                        title="previous chapter">3.5. Hooks</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../api/index.html"
+                        title="next chapter">4. API and Development</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/configuration/theming.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../api/index.html" title="4. API and Development"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="hooks.html" title="3.5. Hooks"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Alot User Manual</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >3. Configuration</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2014, Patrick Totzke.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+    </div>
+  </body>
+</html>
